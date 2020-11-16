@@ -1,5 +1,5 @@
 import fnmatch
-import json
+import person
 import logging
 import random
 import re
@@ -135,7 +135,7 @@ class DejavuTest:
             else:
                 result = result.strip()
                 # we parse the output audio back to a json
-                result = json.loads(result.decode('utf-8').replace("'", '"').replace(': b"', ':"'))
+                result = person.loads(result.decode('utf-8').replace("'", '"').replace(': b"', ':"'))
 
                 # which audio did we predict? We consider only the first match.
                 match = result[RESULTS][0]

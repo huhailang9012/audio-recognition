@@ -9,12 +9,12 @@ HASHES_MATCHED = 'hashes_matched_in_input'
 
 # Hashes fingerprinted in the db.
 FINGERPRINTED_HASHES = 'fingerprinted_hashes_in_db'
-# Percentage regarding hashes matched vs hashes fingerprinted in the db.
+# Percentage regarding hashes matched Video-Spider hashes fingerprinted in the db.
 FINGERPRINTED_CONFIDENCE = 'fingerprinted_confidence'
 
 # Hashes generated from the input.
 INPUT_HASHES = 'input_total_hashes'
-# Percentage regarding hashes matched vs hashes from the input.
+# Percentage regarding hashes matched Video-Spider hashes from the input.
 INPUT_CONFIDENCE = 'input_confidence'
 
 TOTAL_TIME = 'total_time'
@@ -64,6 +64,7 @@ MATCHED_INFORMATION_TABLE_NAME = "matched_information"
 # MATCHED_INFORMATION FIELDS
 FIELD_MATCHED_INFORMATION_ID = 'id'
 FIELD_MATCHED_INFORMATION_AUDIO_ID = 'audio_id'
+FIELD_MATCHED_INFORMATION_AUDIO_NAME = 'audio_name'
 FIELD_MATCHED_INFORMATION_TOTAL_TIME = "total_time"
 FIELD_MATCHED_INFORMATION_FINGERPRINT_TIME = 'fingerprint_time'
 FIELD_MATCHED_INFORMATION_QUERY_TIME = 'query_time'

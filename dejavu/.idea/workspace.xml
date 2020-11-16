@@ -7,6 +7,13 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
   <component name="ProjectId" id="1is1Dh1roRQipdi9iJlRqlBAimT" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -16,8 +23,60 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../Audio-Extracting" />
     <property name="settings.editor.selected.configurable" value="preferences.keymap" />
+  </component>
+  <component name="RunManager" selected="Python.person (1)">
+    <configuration name="person (1)" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="dejavu" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/person.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="person" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="dejavu" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="E:\Project\dejavu\person.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python.person (1)" />
+        <item itemvalue="Python.person" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SvnConfiguration">
     <configuration />
@@ -41,6 +100,19 @@
       <workItem from="1604919582954" duration="5606000" />
       <workItem from="1604925839946" duration="522000" />
       <workItem from="1604927600135" duration="14747000" />
+      <workItem from="1605006986974" duration="1084000" />
+      <workItem from="1605008082880" duration="5401000" />
+      <workItem from="1605061007965" duration="829000" />
+      <workItem from="1605062994624" duration="6400000" />
+      <workItem from="1605074149828" duration="3754000" />
+      <workItem from="1605342569207" duration="2427000" />
+      <workItem from="1605345080138" duration="1005000" />
+      <workItem from="1605346292719" duration="599000" />
+      <workItem from="1605362787531" duration="1621000" />
+      <workItem from="1605402720700" duration="4759000" />
+      <workItem from="1605492251429" duration="600000" />
+      <workItem from="1605512043809" duration="609000" />
+      <workItem from="1605520813471" duration="2604000" />
     </task>
     <servers />
   </component>
@@ -48,27 +120,48 @@
     <option name="version" value="1" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="548" y="153" key="FileChooserDialogImpl" timestamp="1603104009059">
+    <state x="548" y="153" key="FileChooserDialogImpl" timestamp="1605403127788">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="548" y="153" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1603104009059" />
-    <state x="2381" y="162" key="SettingsEditor" timestamp="1604970798230">
+    <state x="2605" y="193" key="FileChooserDialogImpl/0.0.1536.824/1920.0.1920.1040@1920.0.1920.1040" timestamp="1605077895479" />
+    <state x="548" y="153" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1605403127788" />
+    <state width="1877" height="282" key="GridCell.Tab.0.bottom" timestamp="1605013488708">
       <screen x="1920" y="0" width="1920" height="1040" />
     </state>
-    <state x="2381" y="162" key="SettingsEditor/0.0.1536.824/1920.0.1920.1040@1920.0.1920.1040" timestamp="1604970798230" />
-    <state x="2481" y="298" key="com.intellij.ide.util.TipDialog" timestamp="1604927600507">
+    <state width="1877" height="282" key="GridCell.Tab.0.bottom/0.0.1536.824/1920.0.1920.1040@1920.0.1920.1040" timestamp="1605013488708" />
+    <state width="1877" height="282" key="GridCell.Tab.0.center" timestamp="1605013488708">
       <screen x="1920" y="0" width="1920" height="1040" />
     </state>
-    <state x="2481" y="298" key="com.intellij.ide.util.TipDialog/0.0.1536.824/1920.0.1920.1040@1920.0.1920.1040" timestamp="1604927600507" />
-    <state x="449" y="236" key="com.intellij.ide.util.TipDialog/0.0.1536.824@0.0.1536.824" timestamp="1604734180095" />
-    <state x="2786" y="29" width="803" height="1011" key="find.popup" timestamp="1604974939304">
+    <state width="1877" height="282" key="GridCell.Tab.0.center/0.0.1536.824/1920.0.1920.1040@1920.0.1920.1040" timestamp="1605013488708" />
+    <state width="1877" height="282" key="GridCell.Tab.0.left" timestamp="1605013488708">
       <screen x="1920" y="0" width="1920" height="1040" />
     </state>
-    <state x="2786" y="29" width="803" height="1011" key="find.popup/0.0.1536.824/1920.0.1920.1040@1920.0.1920.1040" timestamp="1604974939304" />
+    <state width="1877" height="282" key="GridCell.Tab.0.left/0.0.1536.824/1920.0.1920.1040@1920.0.1920.1040" timestamp="1605013488708" />
+    <state width="1877" height="282" key="GridCell.Tab.0.right" timestamp="1605013488708">
+      <screen x="1920" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="282" key="GridCell.Tab.0.right/0.0.1536.824/1920.0.1920.1040@1920.0.1920.1040" timestamp="1605013488708" />
+    <state x="2381" y="162" key="SettingsEditor" timestamp="1605344991864">
+      <screen x="1920" y="0" width="1920" height="1040" />
+    </state>
+    <state x="2381" y="162" key="SettingsEditor/0.0.1536.824/1920.0.1920.1040@1920.0.1920.1040" timestamp="1605344991864" />
+    <state x="449" y="236" key="com.intellij.ide.util.TipDialog" timestamp="1605402720519">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="2481" y="298" key="com.intellij.ide.util.TipDialog/0.0.1536.824/1920.0.1920.1040@1920.0.1920.1040" timestamp="1605074153316" />
+    <state x="449" y="236" key="com.intellij.ide.util.TipDialog/0.0.1536.824@0.0.1536.824" timestamp="1605402720519" />
+    <state x="2786" y="29" width="803" height="1011" key="find.popup" timestamp="1605077018334">
+      <screen x="1920" y="0" width="1920" height="1040" />
+    </state>
+    <state x="2786" y="29" width="803" height="1011" key="find.popup/0.0.1536.824/1920.0.1920.1040@1920.0.1920.1040" timestamp="1605077018334" />
     <state x="447" y="11" width="642" height="801" key="find.popup/0.0.1536.824@0.0.1536.824" timestamp="1604543280985" />
-    <state x="2543" y="225" key="search.everywhere.popup" timestamp="1604970745742">
+    <state x="2543" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1605071083335">
       <screen x="1920" y="0" width="1920" height="1040" />
     </state>
-    <state x="2543" y="225" key="search.everywhere.popup/0.0.1536.824/1920.0.1920.1040@1920.0.1920.1040" timestamp="1604970745742" />
+    <state x="2543" y="225" width="672" height="678" key="search.everywhere.popup/0.0.1536.824/1920.0.1920.1040@1920.0.1920.1040" timestamp="1605071083335" />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/dejavu$json.coverage" NAME="json Coverage Results" MODIFIED="1605007858919" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/dejavu$person__1_.coverage" NAME="person (1) Coverage Results" MODIFIED="1605008793087" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>

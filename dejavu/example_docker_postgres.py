@@ -1,5 +1,4 @@
 import json
-
 from dejavu import Dejavu
 from dejavu.logic.recognizer.file_recognizer import FileRecognizer
 from dejavu.logic.recognizer.microphone_recognizer import MicrophoneRecognizer
@@ -17,6 +16,11 @@ config = {
 
 if __name__ == '__main__':
 
+    # djv = Dejavu(config)
+    # infos = djv.find_matched_info()
+    # # result = json.dumps(infos, ensure_ascii=False)
+    # result = json.dumps(infos, default=lambda obj: obj.__dict__, sort_keys=False, indent=4)
+    # print(result)
     # create a Dejavu instance
     djv = Dejavu(config)
 
@@ -31,3 +35,4 @@ if __name__ == '__main__':
     recognizer = FileRecognizer(djv)
     results = recognizer.recognize_file("test/woodward_43s.wav")
     print(f"No shortcut, we recognized: {results}\n")
+

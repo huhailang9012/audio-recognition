@@ -58,6 +58,16 @@ class BaseDatabase(object, metaclass=abc.ABCMeta):
         pass
 
     @abc.abstractmethod
+    def count_matched_audios_by_sha1(self, file_sha1: str) -> int:
+        """
+        count matched audio num.
+
+        :param file_sha1: file sha1.
+        :return: num.
+        """
+        pass
+
+    @abc.abstractmethod
     def get_num_fingerprints(self) -> int:
         """
         Returns the fingerprints' count stored.
@@ -79,6 +89,24 @@ class BaseDatabase(object, metaclass=abc.ABCMeta):
     def get_audios(self) -> List[Dict[str, str]]:
         """
         Returns all fully fingerprinted audios in the database
+
+        :return: a dictionary with the audios info.
+        """
+        pass
+
+    @abc.abstractmethod
+    def get_matched_info(self) -> List[Dict[str, str]]:
+        """
+        Returns matched information list
+
+        :return: a dictionary with the information info list.
+        """
+        pass
+
+    @abc.abstractmethod
+    def get_related_audios(self, audio_id: str) -> List[Dict[str, str]]:
+        """
+        Returns all related audios
 
         :return: a dictionary with the audios info.
         """
@@ -128,16 +156,16 @@ class BaseDatabase(object, metaclass=abc.ABCMeta):
         :param file_sha1: The file sha1 of the audio.
         :param format: The format of the audio.
         :param storage_path: The storage path of the audio.
-        :param date_created: The time of the audio to create.
         """
         pass
 
     @abc.abstractmethod
-    def insert_matched_information(self, id: str, audio_id: str, total_time: int, fingerprint_time: int, query_time: int, align_time: int):
+    def insert_matched_information(self, id: str, audio_id: str, audio_name: str, total_time: float,
+                                   fingerprint_time: float, query_time: float, align_time: float, date_created: str):
         pass
 
     @abc.abstractmethod
-    def insert_related_audios(self, id: str, audio_id: int, related_audio_id: int, related_audio_name: str, match_id: int,
+    def insert_related_audios(self, id: str, audio_id: str, related_audio_id: str, related_audio_name: str, match_id: str,
                               input_total_hashes: int, fingerprinted_hashes_in_db: int, hashes_matched_in_input: int,
                               input_confidence: float, fingerprinted_confidence: float, offset: int,
                               offset_seconds: int, file_sha1: str):

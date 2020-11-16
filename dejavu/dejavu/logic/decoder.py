@@ -31,6 +31,13 @@ def unique_hash(file_path: str, block_size: int = 2**20) -> str:
     return s.hexdigest().upper()
 
 
+def unique_md5(file_path: str) -> str:
+
+    with open(file_path, 'rb') as fp:
+        data = fp.read()
+    return sha1.md5(data).hexdigest()
+
+
 def find_files(path: str, extensions: List[str]) -> List[Tuple[str, str]]:
     """
     Get all files that meet the specified extensions.

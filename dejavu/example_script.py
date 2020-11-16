@@ -1,4 +1,4 @@
-import json
+import person
 
 from dejavu import Dejavu
 from dejavu.logic.recognizer.file_recognizer import FileRecognizer
@@ -6,7 +6,7 @@ from dejavu.logic.recognizer.microphone_recognizer import MicrophoneRecognizer
 
 # load config from a JSON file (or anything outputting a python dictionary)
 with open("dejavu.cnf.SAMPLE") as f:
-    config = json.load(f)
+    config = person.load(f)
 
 if __name__ == '__main__':
 

@@ -8,17 +8,22 @@ from dejavu.config.settings import (FIELD_FILE_SHA1, FIELD_FINGERPRINTED,
                                     FIELD_HASH, FIELD_OFFSET, FIELD_AUDIO_ID,
                                     FIELD_AUDIO_NAME, FIELD_TOTAL_HASHES,
                                     FIELD_MATCHED_AUDIO_ID, FIELD_MATCHED_AUDIO_NAME,
-                                    FIELD_MATCHED_AUDIO_FILE_SHA1,FIELD_MATCHED_AUDIO_FORMAT,
-                                    FIELD_MATCHED_AUDIO_STORAGE_PATH,FIELD_MATCHED_AUDIO_DATE_CREATED,
-                                    FIELD_MATCHED_INFORMATION_ID,FIELD_MATCHED_INFORMATION_AUDIO_ID,
-                                    FIELD_MATCHED_INFORMATION_TOTAL_TIME,FIELD_MATCHED_INFORMATION_FINGERPRINT_TIME,
-                                    FIELD_MATCHED_INFORMATION_QUERY_TIME,FIELD_MATCHED_INFORMATION_ALIGN_TIME,
+                                    FIELD_MATCHED_AUDIO_FILE_SHA1, FIELD_MATCHED_AUDIO_FORMAT,
+                                    FIELD_MATCHED_AUDIO_STORAGE_PATH, FIELD_MATCHED_AUDIO_DATE_CREATED,
+                                    FIELD_MATCHED_INFORMATION_ID, FIELD_MATCHED_INFORMATION_AUDIO_ID, FIELD_MATCHED_INFORMATION_AUDIO_NAME,
+                                    FIELD_MATCHED_INFORMATION_TOTAL_TIME, FIELD_MATCHED_INFORMATION_FINGERPRINT_TIME,
+                                    FIELD_MATCHED_INFORMATION_QUERY_TIME, FIELD_MATCHED_INFORMATION_ALIGN_TIME,
                                     FIELD_MATCHED_INFORMATION_DATE_CREATED,
-                                    FIELD_RELATED_AUDIOS_ID, FIELD_RELATED_AUDIOS_AUDIO_ID, FIELD_RELATED_AUDIOS_RELATED_AUDIO_ID,
-                                    FIELD_RELATED_AUDIOS_RELATED_AUDIO_NAME, FIELD_RELATED_AUDIOS_MATCHED_ID, FIELD_RELATED_AUDIOS_INPUT_TOTAL_HASHES,
-                                    FIELD_RELATED_AUDIOS_FINGERPRINTED_HASHES_IN_DB,FIELD_RELATED_AUDIOS_HASHES_MATCHED_IN_PUT, FIELD_RELATED_AUDIOS_INPUT_CONFIDENCE,
-                                    FIELD_RELATED_AUDIOS_FINGERPRINTED_CONFIDENCE, FIELD_RELATED_AUDIOS_OFFSET, FIELD_RELATED_AUDIOS_OFFSET_SECONDS, FIELD_RELATED_AUDIOS_FILE_SHA1,
-                                    MATCHED_AUDIOS_TABLE_NAME,MATCHED_INFORMATION_TABLE_NAME,RELATED_AUDIOS_TABLE_NAME,FINGERPRINTS_TABLE_NAME, AUDIOS_TABLE_NAME)
+                                    FIELD_RELATED_AUDIOS_ID, FIELD_RELATED_AUDIOS_AUDIO_ID,
+                                    FIELD_RELATED_AUDIOS_RELATED_AUDIO_ID,
+                                    FIELD_RELATED_AUDIOS_RELATED_AUDIO_NAME, FIELD_RELATED_AUDIOS_MATCHED_ID,
+                                    FIELD_RELATED_AUDIOS_INPUT_TOTAL_HASHES,
+                                    FIELD_RELATED_AUDIOS_FINGERPRINTED_HASHES_IN_DB,
+                                    FIELD_RELATED_AUDIOS_HASHES_MATCHED_IN_PUT, FIELD_RELATED_AUDIOS_INPUT_CONFIDENCE,
+                                    FIELD_RELATED_AUDIOS_FINGERPRINTED_CONFIDENCE, FIELD_RELATED_AUDIOS_OFFSET,
+                                    FIELD_RELATED_AUDIOS_OFFSET_SECONDS, FIELD_RELATED_AUDIOS_FILE_SHA1,
+                                    MATCHED_AUDIOS_TABLE_NAME, MATCHED_INFORMATION_TABLE_NAME,
+                                    RELATED_AUDIOS_TABLE_NAME, FINGERPRINTS_TABLE_NAME, AUDIOS_TABLE_NAME)
 
 
 class PostgreSQLDatabase(CommonDatabase):
@@ -67,7 +72,7 @@ class PostgreSQLDatabase(CommonDatabase):
         ,   "{FIELD_MATCHED_AUDIO_FILE_SHA1}" BYTEA NOT NULL
         ,   "{FIELD_MATCHED_AUDIO_FORMAT}" VARCHAR(8) NOT NULL
         ,   "{FIELD_MATCHED_AUDIO_STORAGE_PATH}" VARCHAR(256) NOT NULL
-        ,   "{FIELD_MATCHED_AUDIO_DATE_CREATED}" TIMESTAMP NOT NULL DEFAULT now()
+        ,   "{FIELD_MATCHED_AUDIO_DATE_CREATED}" CHAR(19) NOT NULL
         );
 
         CREATE INDEX IF NOT EXISTS "ix_{FINGERPRINTS_TABLE_NAME}_{FIELD_HASH}" ON "{FINGERPRINTS_TABLE_NAME}"
@@ -78,11 +83,12 @@ class PostgreSQLDatabase(CommonDatabase):
         CREATE TABLE IF NOT EXISTS "{MATCHED_INFORMATION_TABLE_NAME}" (
             "{FIELD_MATCHED_INFORMATION_ID}" CHAR(32) PRIMARY KEY
         ,   "{FIELD_MATCHED_INFORMATION_AUDIO_ID}" CHAR(32) NOT NULL
+        ,   "{FIELD_MATCHED_INFORMATION_AUDIO_NAME}" VARCHAR (128) NOT NULL
         ,   "{FIELD_MATCHED_INFORMATION_TOTAL_TIME}" REAL
         ,   "{FIELD_MATCHED_INFORMATION_FINGERPRINT_TIME}" REAL
         ,   "{FIELD_MATCHED_INFORMATION_QUERY_TIME}" REAL
         ,   "{FIELD_MATCHED_INFORMATION_ALIGN_TIME}" REAL
-        ,   "{FIELD_MATCHED_INFORMATION_DATE_CREATED}" TIMESTAMP NOT NULL DEFAULT now()
+        ,   "{FIELD_MATCHED_INFORMATION_DATE_CREATED}" CHAR(19) NOT NULL
         ,   CONSTRAINT "fk_{MATCHED_INFORMATION_TABLE_NAME}_{FIELD_MATCHED_INFORMATION_AUDIO_ID}" FOREIGN KEY ("{FIELD_MATCHED_INFORMATION_AUDIO_ID}") REFERENCES "{MATCHED_AUDIOS_TABLE_NAME}"("{FIELD_MATCHED_AUDIO_ID}")
         );
     """
@@ -97,7 +103,7 @@ class PostgreSQLDatabase(CommonDatabase):
         ,   "{FIELD_RELATED_AUDIOS_INPUT_TOTAL_HASHES}" INT
         ,   "{FIELD_RELATED_AUDIOS_FINGERPRINTED_HASHES_IN_DB}" INT
         ,   "{FIELD_RELATED_AUDIOS_HASHES_MATCHED_IN_PUT}" INT
-        ,   "{FIELD_RELATED_AUDIOS_INPUT_CONFIDENCE}" REALRE1
+        ,   "{FIELD_RELATED_AUDIOS_INPUT_CONFIDENCE}" REAL
         ,   "{FIELD_RELATED_AUDIOS_FINGERPRINTED_CONFIDENCE}" REAL
         ,   "{FIELD_RELATED_AUDIOS_OFFSET}" INT
         ,   "{FIELD_RELATED_AUDIOS_OFFSET_SECONDS}" INT
@@ -124,13 +130,13 @@ class PostgreSQLDatabase(CommonDatabase):
     """
 
     INSERT_MATCHED_AUDIOS = f"""
-        INSERT INTO "{MATCHED_AUDIOS_TABLE_NAME}" ("{FIELD_MATCHED_AUDIO_ID}","{FIELD_MATCHED_AUDIO_NAME}", "{FIELD_MATCHED_AUDIO_FILE_SHA1}","{FIELD_MATCHED_AUDIO_FORMAT}","{FIELD_MATCHED_AUDIO_STORAGE_PATH}")
-        VALUES (%s, %s, %s, %s, %s);
+        INSERT INTO "{MATCHED_AUDIOS_TABLE_NAME}" ("{FIELD_MATCHED_AUDIO_ID}","{FIELD_MATCHED_AUDIO_NAME}", "{FIELD_MATCHED_AUDIO_FILE_SHA1}","{FIELD_MATCHED_AUDIO_FORMAT}","{FIELD_MATCHED_AUDIO_STORAGE_PATH}","{FIELD_MATCHED_AUDIO_DATE_CREATED}")
+        VALUES (%s, %s, %s, %s, %s, %s);
     """
 
     INSERT_MATCHED_INFORMATION = f"""
-        INSERT INTO "{MATCHED_INFORMATION_TABLE_NAME}" ("{FIELD_MATCHED_INFORMATION_ID}","{FIELD_MATCHED_INFORMATION_AUDIO_ID}", "{FIELD_MATCHED_INFORMATION_TOTAL_TIME}","{FIELD_MATCHED_INFORMATION_FINGERPRINT_TIME}","{FIELD_MATCHED_INFORMATION_QUERY_TIME}","{FIELD_MATCHED_INFORMATION_ALIGN_TIME}")
-        VALUES (%s, %s, %s, %s, %s, %s);
+        INSERT INTO "{MATCHED_INFORMATION_TABLE_NAME}" ("{FIELD_MATCHED_INFORMATION_ID}","{FIELD_MATCHED_INFORMATION_AUDIO_ID}","{FIELD_MATCHED_INFORMATION_AUDIO_NAME}", "{FIELD_MATCHED_INFORMATION_TOTAL_TIME}","{FIELD_MATCHED_INFORMATION_FINGERPRINT_TIME}","{FIELD_MATCHED_INFORMATION_QUERY_TIME}","{FIELD_MATCHED_INFORMATION_ALIGN_TIME}","{FIELD_MATCHED_INFORMATION_DATE_CREATED}")
+        VALUES (%s, %s, %s, %s, %s, %s, %s, %s);
     """
 
     INSERT_RELATED_AUDIOS = f"""
@@ -166,6 +172,8 @@ class PostgreSQLDatabase(CommonDatabase):
 
     SELECT_NUM_FINGERPRINTS = f'SELECT COUNT(*) AS n FROM "{FINGERPRINTS_TABLE_NAME}";'
 
+    COUNT_MATCHED_AUDIOS = f'SELECT COUNT(*)  FROM "{MATCHED_AUDIOS_TABLE_NAME}" WHERE "{FIELD_MATCHED_AUDIO_FILE_SHA1}" = %s;'
+
     SELECT_UNIQUE_AUDIO_IDS = f"""
         SELECT COUNT("{FIELD_AUDIO_ID}") AS n
         FROM "{AUDIOS_TABLE_NAME}"
@@ -183,9 +191,45 @@ class PostgreSQLDatabase(CommonDatabase):
         WHERE "{FIELD_FINGERPRINTED}" = 1;
     """
 
+    SELECT_MATCHED_INFORMATION = f"""
+        SELECT
+            "{FIELD_MATCHED_INFORMATION_ID}"
+        ,   "{FIELD_MATCHED_INFORMATION_AUDIO_ID}"
+        ,   "{FIELD_MATCHED_INFORMATION_AUDIO_NAME}"
+        ,   "{FIELD_MATCHED_INFORMATION_TOTAL_TIME}"
+        ,   "{FIELD_MATCHED_INFORMATION_FINGERPRINT_TIME}"
+        ,   "{FIELD_MATCHED_INFORMATION_QUERY_TIME}"
+        ,   "{FIELD_MATCHED_INFORMATION_ALIGN_TIME}"
+        ,   "{FIELD_MATCHED_INFORMATION_DATE_CREATED}"
+        FROM "{MATCHED_INFORMATION_TABLE_NAME}"
+        ORDER BY "{FIELD_MATCHED_INFORMATION_DATE_CREATED}" DESC LIMIT 20;
+    """
+
+    SELECT_RELATED_AUDIOS = f"""
+        SELECT
+            "{FIELD_RELATED_AUDIOS_ID}"
+        ,   "{FIELD_RELATED_AUDIOS_AUDIO_ID}"
+        ,   "{FIELD_RELATED_AUDIOS_RELATED_AUDIO_ID}"
+        ,   "{FIELD_RELATED_AUDIOS_RELATED_AUDIO_NAME}"
+        ,   "{FIELD_RELATED_AUDIOS_MATCHED_ID}"
+        ,   "{FIELD_RELATED_AUDIOS_INPUT_TOTAL_HASHES}"
+        ,   "{FIELD_RELATED_AUDIOS_FINGERPRINTED_HASHES_IN_DB}"
+        ,   "{FIELD_RELATED_AUDIOS_HASHES_MATCHED_IN_PUT}"
+        ,   "{FIELD_RELATED_AUDIOS_INPUT_CONFIDENCE}"
+        ,   "{FIELD_RELATED_AUDIOS_FINGERPRINTED_CONFIDENCE}"
+        ,   "{FIELD_RELATED_AUDIOS_OFFSET}"
+        ,   "{FIELD_RELATED_AUDIOS_OFFSET_SECONDS}"
+        ,   upper(encode("{FIELD_RELATED_AUDIOS_FILE_SHA1}", 'hex')) AS "{FIELD_FILE_SHA1}"
+        FROM "{RELATED_AUDIOS_TABLE_NAME}"
+        WHERE "{FIELD_RELATED_AUDIOS_AUDIO_ID}" = %s;
+    """
+
     # DROPS
     DROP_FINGERPRINTS = F'DROP TABLE IF EXISTS "{FINGERPRINTS_TABLE_NAME}";'
     DROP_AUDIOS = F'DROP TABLE IF EXISTS "{AUDIOS_TABLE_NAME}";'
+    DROP_MATCHED_AUDIOS = F'DROP TABLE IF EXISTS "{MATCHED_AUDIOS_TABLE_NAME}";'
+    DROP_MATCHED_INFORMATION = F'DROP TABLE IF EXISTS "{MATCHED_INFORMATION_TABLE_NAME}";'
+    DROP_RELATED_AUDIOS = F'DROP TABLE IF EXISTS "{RELATED_AUDIOS_TABLE_NAME}";'
 
     # UPDATE
     UPDATE_AUDIO_FINGERPRINTED = f"""
@@ -231,7 +275,7 @@ class PostgreSQLDatabase(CommonDatabase):
             cur.execute(self.INSERT_AUDIOS, (audio_id, audio_name, file_hash, total_hashes))
             return cur.fetchone()[0]
 
-    def insert_matched_audios(self, id: str, name: str, file_sha1: str, format: str, storage_path: str):
+    def insert_matched_audios(self, id: str, name: str, file_sha1: str, format: str, storage_path: str, date_created: str):
         """
         Inserts a matched audio into the database, returns the new
         identifier of the audio.
@@ -242,15 +286,23 @@ class PostgreSQLDatabase(CommonDatabase):
         :param storage_path: The storage path of the audio.
         """
         with self.cursor() as cur:
-            cur.execute(self.INSERT_MATCHED_AUDIOS, (id, name, file_sha1, format,storage_path))
+            cur.execute(self.INSERT_MATCHED_AUDIOS, (id, name, file_sha1, format, storage_path, date_created))
 
-    def insert_matched_information(self, id: str, audio_id: int, total_time: int, fingerprint_time: int, query_time: int, align_time: int):
+    def insert_matched_information(self, id: str, audio_id: str, audio_name: str, total_time: float,
+                                   fingerprint_time: float, query_time: float, align_time: float, date_created: str):
         with self.cursor() as cur:
-            cur.execute(self.INSERT_MATCHED_INFORMATION, (id, audio_id, total_time, fingerprint_time, query_time, align_time))
+            cur.execute(self.INSERT_MATCHED_INFORMATION,
+                        (id, audio_id, audio_name, total_time, fingerprint_time, query_time, align_time, date_created))
 
-    def insert_related_audios(self, id: str, audio_id: int, related_audio_id: int, related_audio_name: str, match_id: int, input_total_hashes: int, fingerprinted_hashes_in_db: int, hashes_matched_in_input: int, input_confidence: float, fingerprinted_confidence: float, offset: int, offset_seconds: int, file_sha1: str):
+    def insert_related_audios(self, id: str, audio_id: str, related_audio_id: str, related_audio_name: str,
+                              match_id: str, input_total_hashes: int, fingerprinted_hashes_in_db: int,
+                              hashes_matched_in_input: int, input_confidence: float, fingerprinted_confidence: float,
+                              offset: int, offset_seconds: int, file_sha1: str):
         with self.cursor() as cur:
-            cur.execute(self.INSERT_RELATED_AUDIOS, (id, audio_id, related_audio_id, related_audio_name, match_id, input_total_hashes, fingerprinted_hashes_in_db, hashes_matched_in_input, input_confidence, fingerprinted_confidence, offset, offset_seconds, file_sha1))
+            cur.execute(self.INSERT_RELATED_AUDIOS, (
+                id, audio_id, related_audio_id, related_audio_name, match_id, input_total_hashes,
+                fingerprinted_hashes_in_db, hashes_matched_in_input, input_confidence, fingerprinted_confidence, offset,
+                offset_seconds, file_sha1))
 
     def __getstate__(self):
         return self._options,
@@ -264,6 +316,7 @@ def cursor_factory(**factory_options):
     def cursor(**options):
         options.update(factory_options)
         return Cursor(**options)
+
     return cursor
 
 
@@ -275,6 +328,7 @@ class Cursor(object):
         cur.execute(query)
         ...
     """
+
     def __init__(self, dictionary=False, **options):
         super().__init__()
 

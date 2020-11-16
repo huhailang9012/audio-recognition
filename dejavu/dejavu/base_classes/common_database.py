@@ -43,9 +43,12 @@ class CommonDatabase(BaseDatabase, metaclass=abc.ABCMeta):
         Called when the database should be cleared of all data.
         """
         with self.cursor() as cur:
+
+            cur.execute(self.DROP_RELATED_AUDIOS)
+            cur.execute(self.DROP_MATCHED_INFORMATION)
+            cur.execute(self.DROP_MATCHED_AUDIOS)
             cur.execute(self.DROP_FINGERPRINTS)
             cur.execute(self.DROP_AUDIOS)
-
         self.setup()
 
     def delete_unfingerprinted_audios(self) -> None:
@@ -99,6 +102,26 @@ class CommonDatabase(BaseDatabase, metaclass=abc.ABCMeta):
             cur.execute(self.SELECT_AUDIOS)
             return list(cur)
 
+    def get_matched_info(self) -> List[Dict[str, str]]:
+        """
+        Returns matched information list
+
+        :return: a dictionary with the information info list.
+        """
+        with self.cursor(dictionary=True) as cur:
+            cur.execute(self.SELECT_MATCHED_INFORMATION)
+            return list(cur)
+
+    def get_related_audios(self, audio_id: str) -> List[Dict[str, str]]:
+        """
+        Returns all related audios
+
+        :return: a dictionary with the audios info.
+        """
+        with self.cursor(dictionary=True) as cur:
+            cur.execute(self.SELECT_RELATED_AUDIOS, (audio_id,))
+            return list(cur)
+
     def get_audio_by_id(self, audio_id: int) -> Dict[str, str]:
         """
         Brings the audio info from the database.
@@ -109,6 +132,19 @@ class CommonDatabase(BaseDatabase, metaclass=abc.ABCMeta):
         with self.cursor(dictionary=True) as cur:
             cur.execute(self.SELECT_AUDIO, (audio_id,))
             return cur.fetchone()
+
+    def count_matched_audios_by_sha1(self, file_sha1: str) -> int:
+        """
+        count matched audio num.
+
+        :param file_sha1: file sha1.
+        :return: num.
+        """
+        with self.cursor(dictionary=True) as cur:
+            cur.execute(self.COUNT_MATCHED_AUDIOS, (file_sha1,))
+            count = cur.fetchone()[0] if cur.rowcount != 0 else 0
+
+            return count
 
     def insert(self, fingerprint: str, audio_id: int, offset: int):
         """
@@ -144,16 +180,15 @@ class CommonDatabase(BaseDatabase, metaclass=abc.ABCMeta):
         :param file_sha1: The file sha1 of the audio.
         :param format: The format of the audio.
         :param storage_path: The storage path of the audio.
-        :param date_created: The time of the audio to create.
         """
         pass
 
     @abc.abstractmethod
-    def insert_matched_information(self, id: str, audio_id: str, total_time: int, fingerprint_time: int, query_time: int, align_time: int):
+    def insert_matched_information(self, id: str, audio_id: str, audio_name: str, total_time: float, fingerprint_time: float, query_time: float, align_time: float, date_created: str):
         pass
 
     @abc.abstractmethod
-    def insert_related_audios(self, id: str, audio_id: int, related_audio_id: int, related_audio_name: str, match_id: int,
+    def insert_related_audios(self, id: str, audio_id: str, related_audio_id: str, related_audio_name: str, match_id: str,
                               input_total_hashes: int, fingerprinted_hashes_in_db: int, hashes_matched_in_input: int,
                               input_confidence: float, fingerprinted_confidence: float, offset: int,
                               offset_seconds: int, file_sha1: str):

@@ -3,18 +3,33 @@ import os
 import sys
 import traceback
 import uuid
+import json
 from itertools import groupby
 from time import time
 from typing import Dict, List, Tuple
 
 import dejavu.logic.decoder as decoder
 from dejavu.base_classes.base_database import get_database
+from dejavu.base_classes.matched_information import Matched_Information
 from dejavu.config.settings import (DEFAULT_FS, DEFAULT_OVERLAP_RATIO,
                                     DEFAULT_WINDOW_SIZE, FIELD_FILE_SHA1,
                                     FIELD_TOTAL_HASHES,
                                     FINGERPRINTED_CONFIDENCE,
                                     FINGERPRINTED_HASHES, HASHES_MATCHED,
                                     INPUT_CONFIDENCE, INPUT_HASHES, OFFSET,
+                                    FIELD_MATCHED_INFORMATION_ID, FIELD_MATCHED_INFORMATION_AUDIO_ID,
+                                    FIELD_MATCHED_INFORMATION_AUDIO_NAME,
+                                    FIELD_MATCHED_INFORMATION_TOTAL_TIME, FIELD_MATCHED_INFORMATION_FINGERPRINT_TIME,
+                                    FIELD_MATCHED_INFORMATION_QUERY_TIME, FIELD_MATCHED_INFORMATION_ALIGN_TIME,
+                                    FIELD_MATCHED_INFORMATION_DATE_CREATED,
+                                    FIELD_RELATED_AUDIOS_ID, FIELD_RELATED_AUDIOS_AUDIO_ID,
+                                    FIELD_RELATED_AUDIOS_RELATED_AUDIO_ID,
+                                    FIELD_RELATED_AUDIOS_RELATED_AUDIO_NAME, FIELD_RELATED_AUDIOS_MATCHED_ID,
+                                    FIELD_RELATED_AUDIOS_INPUT_TOTAL_HASHES,
+                                    FIELD_RELATED_AUDIOS_FINGERPRINTED_HASHES_IN_DB,
+                                    FIELD_RELATED_AUDIOS_HASHES_MATCHED_IN_PUT, FIELD_RELATED_AUDIOS_INPUT_CONFIDENCE,
+                                    FIELD_RELATED_AUDIOS_FINGERPRINTED_CONFIDENCE, FIELD_RELATED_AUDIOS_OFFSET,
+                                    FIELD_RELATED_AUDIOS_OFFSET_SECONDS, FIELD_RELATED_AUDIOS_FILE_SHA1,
                                     OFFSET_SECS, AUDIO_ID, AUDIO_NAME, TOPN)
 from dejavu.logic.fingerprint import fingerprint
 
@@ -111,7 +126,7 @@ class Dejavu:
                 traceback.print_exc(file=sys.stdout)
             else:
                 audio_id = uuid.uuid1().hex
-                sid = self.db.insert_audios(audio_id,audio_name, file_hash, len(hashes))
+                sid = self.db.insert_audios(audio_id, audio_name, file_hash, len(hashes))
 
                 self.db.insert_hashes(sid, hashes)
                 self.db.set_audio_fingerprinted(sid)
@@ -175,6 +190,45 @@ class Dejavu:
 
         return matches, dedup_hashes, query_time
 
+    def find_matched_info(self) -> list:
+        matched_infos = self.db.get_matched_info()
+        print("matched_infos",matched_infos)
+        matched_informations = list()
+        for info in matched_infos:
+            audio_id = info.get(FIELD_MATCHED_INFORMATION_AUDIO_ID, None)
+            audio_name = info.get(FIELD_MATCHED_INFORMATION_AUDIO_NAME, None)
+            total_time = info.get(FIELD_MATCHED_INFORMATION_TOTAL_TIME, None)
+            fingerprint_time = info.get(FIELD_MATCHED_INFORMATION_FINGERPRINT_TIME, None)
+            align_time = info.get(FIELD_MATCHED_INFORMATION_ALIGN_TIME, None)
+            query_time = info.get(FIELD_MATCHED_INFORMATION_QUERY_TIME, None)
+            date_created = info.get(FIELD_MATCHED_INFORMATION_DATE_CREATED, None)
+            related_audios = list()
+            ras = self.db.get_related_audios(audio_id)
+            for ra in ras:
+                audio = {
+                    FIELD_RELATED_AUDIOS_RELATED_AUDIO_ID: ra.get(FIELD_RELATED_AUDIOS_RELATED_AUDIO_ID, None),
+                    FIELD_RELATED_AUDIOS_RELATED_AUDIO_NAME: ra.get(FIELD_RELATED_AUDIOS_RELATED_AUDIO_NAME, None),
+                    FIELD_RELATED_AUDIOS_MATCHED_ID: ra.get(FIELD_RELATED_AUDIOS_MATCHED_ID, None),
+                    FIELD_RELATED_AUDIOS_INPUT_TOTAL_HASHES: ra.get(FIELD_RELATED_AUDIOS_INPUT_TOTAL_HASHES, None),
+                    FIELD_RELATED_AUDIOS_FINGERPRINTED_HASHES_IN_DB: ra.get(
+                        FIELD_RELATED_AUDIOS_FINGERPRINTED_HASHES_IN_DB, None),
+                    FIELD_RELATED_AUDIOS_HASHES_MATCHED_IN_PUT: ra.get(FIELD_RELATED_AUDIOS_HASHES_MATCHED_IN_PUT,
+                                                                       None),
+                    FIELD_RELATED_AUDIOS_INPUT_CONFIDENCE: ra.get(FIELD_RELATED_AUDIOS_INPUT_CONFIDENCE, None),
+                    FIELD_RELATED_AUDIOS_FINGERPRINTED_CONFIDENCE: ra.get(FIELD_RELATED_AUDIOS_FINGERPRINTED_CONFIDENCE,
+                                                                          None),
+                    FIELD_RELATED_AUDIOS_OFFSET: ra.get(FIELD_RELATED_AUDIOS_OFFSET, None),
+                    FIELD_RELATED_AUDIOS_OFFSET_SECONDS: ra.get(FIELD_RELATED_AUDIOS_OFFSET_SECONDS, None),
+                    FIELD_RELATED_AUDIOS_FILE_SHA1: ra.get(FIELD_RELATED_AUDIOS_FILE_SHA1, None)
+                }
+                related_audios.append(audio)
+            matched = Matched_Information(audio_id, audio_name, total_time, fingerprint_time, align_time, query_time,
+                                          related_audios, date_created)
+            result = json.dumps(matched, default=lambda obj: obj.__dict__, sort_keys=False, indent=4)
+            print(result)
+            matched_informations.append(matched)
+        return matched_informations
+
     def align_matches(self, matches: List[Tuple[int, int]], dedup_hashes: Dict[str, int], queried_hashes: int,
                       topn: int = TOPN) -> List[Dict[str, any]]:
         """
@@ -211,9 +265,9 @@ class Dejavu:
                 INPUT_HASHES: queried_hashes,
                 FINGERPRINTED_HASHES: audio_hashes,
                 HASHES_MATCHED: hashes_matched,
-                # Percentage regarding hashes matched vs hashes from the input.
+                # Percentage regarding hashes matched Video-Spider hashes from the input.
                 INPUT_CONFIDENCE: round(hashes_matched / queried_hashes, 2),
-                # Percentage regarding hashes matched vs hashes fingerprinted in the db.
+                # Percentage regarding hashes matched Video-Spider hashes fingerprinted in the db.
                 FINGERPRINTED_CONFIDENCE: round(hashes_matched / audio_hashes, 2),
                 OFFSET: offset,
                 OFFSET_SECS: nseconds,

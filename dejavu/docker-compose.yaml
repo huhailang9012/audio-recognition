@@ -2,19 +2,19 @@ version: '3'
 services:
   db:
     build:
-      context: ./docker/postgres
+      context: docker/postgres
       network: host
     environment:
-      - POSTGRES_DB=dejavu
+      - POSTGRES_DB=audio_recognition
       - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=password
+      - POSTGRES_PASSWORD=123456
     networks:
       - db_network
     ports:
       - "5432:5432"
   python:
     build:
-      context: ./docker/python
+      context: docker/python
       network: host
     volumes:
       - .:/code
@@ -22,5 +22,7 @@ services:
       - db
     networks:
       - db_network
+    ports:
+      - "8003:8003"
 networks:
   db_network:

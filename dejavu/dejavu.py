@@ -1,5 +1,5 @@
 import argparse
-import json
+import person
 import sys
 from argparse import RawTextHelpFormatter
 from os.path import isdir
@@ -17,7 +17,7 @@ def init(configpath):
     """
     try:
         with open(configpath) as f:
-            config = json.load(f)
+            config = person.load(f)
     except IOError as err:
         print(f"Cannot open configuration: {str(err)}. Exiting")
         sys.exit(1)
