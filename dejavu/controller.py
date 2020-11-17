@@ -25,9 +25,9 @@ def index():
 
 
 @app.post("/target/audio/recognize")
-def recognize_target_audio(audio_path: str):
+def recognize_target_audio(audio_id: str, audio_path: str):
 
-    FileRecognizer(djv).recognize_file(audio_path)
+    FileRecognizer(djv).recognize_file(audio_path, audio_id)
     return {"success": True, "code": 0, "msg": "ok"}
 
 

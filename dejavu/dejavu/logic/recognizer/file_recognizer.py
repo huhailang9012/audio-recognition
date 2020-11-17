@@ -18,16 +18,16 @@ class FileRecognizer(BaseRecognizer):
     def __init__(self, dejavu):
         super().__init__(dejavu)
 
-    def recognize_file(self, filename: str) -> Dict[str, any]:
+    def recognize_file(self, filename: str, audio_id: str) -> Dict[str, any]:
         channels, self.Fs, sha1 = decoder.read(filename, self.dejavu.limit)
-        c = self.dejavu.db.count_matched_audios_by_sha1(sha1)
+        c = self.dejavu.db.count_matched_audios_by_id(audio_id)
         if c > 0:
             return Dict["None", "None"]
         # insert a matched audios into database
         name = os.path.basename(filename)
         auido_id = uuid.uuid1().hex
         now = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-        self.dejavu.db.insert_matched_audios(auido_id, name, sha1, "aac", filename, now)
+        self.dejavu.db.insert_matched_audios(auido_id, name, "aac", filename, now)
         match_id = uuid.uuid1().hex
         t = time()
         matches, fingerprint_time, query_time, align_time = self._recognize(*channels)

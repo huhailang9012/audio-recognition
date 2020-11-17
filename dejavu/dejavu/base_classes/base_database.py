@@ -58,11 +58,10 @@ class BaseDatabase(object, metaclass=abc.ABCMeta):
         pass
 
     @abc.abstractmethod
-    def count_matched_audios_by_sha1(self, file_sha1: str) -> int:
+    def count_matched_audios_by_id(self, audio_id: str) -> int:
         """
         count matched audio num.
-
-        :param file_sha1: file sha1.
+        :param audio_id: audio id.
         :return: num.
         """
         pass
@@ -147,13 +146,12 @@ class BaseDatabase(object, metaclass=abc.ABCMeta):
         pass
 
     @abc.abstractmethod
-    def insert_matched_audios(self, id: str, name: str, file_sha1: str, format: str, storage_path: str, date_created: str):
+    def insert_matched_audios(self, id: str, name: str, format: str, storage_path: str, date_created: str):
         """
         Inserts a matched audio into the database, returns the new
         identifier of the audio.
         :param id: The id of the audio.
         :param name: The name of the audio.
-        :param file_sha1: The file sha1 of the audio.
         :param format: The format of the audio.
         :param storage_path: The storage path of the audio.
         """

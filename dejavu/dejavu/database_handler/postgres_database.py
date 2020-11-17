@@ -69,7 +69,6 @@ class PostgreSQLDatabase(CommonDatabase):
         CREATE TABLE IF NOT EXISTS "{MATCHED_AUDIOS_TABLE_NAME}" (
             "{FIELD_MATCHED_AUDIO_ID}" CHAR(32) PRIMARY KEY
         ,   "{FIELD_MATCHED_AUDIO_NAME}" VARCHAR(64) NOT NULL
-        ,   "{FIELD_MATCHED_AUDIO_FILE_SHA1}" BYTEA NOT NULL
         ,   "{FIELD_MATCHED_AUDIO_FORMAT}" VARCHAR(8) NOT NULL
         ,   "{FIELD_MATCHED_AUDIO_STORAGE_PATH}" VARCHAR(256) NOT NULL
         ,   "{FIELD_MATCHED_AUDIO_DATE_CREATED}" CHAR(19) NOT NULL
@@ -130,8 +129,8 @@ class PostgreSQLDatabase(CommonDatabase):
     """
 
     INSERT_MATCHED_AUDIOS = f"""
-        INSERT INTO "{MATCHED_AUDIOS_TABLE_NAME}" ("{FIELD_MATCHED_AUDIO_ID}","{FIELD_MATCHED_AUDIO_NAME}", "{FIELD_MATCHED_AUDIO_FILE_SHA1}","{FIELD_MATCHED_AUDIO_FORMAT}","{FIELD_MATCHED_AUDIO_STORAGE_PATH}","{FIELD_MATCHED_AUDIO_DATE_CREATED}")
-        VALUES (%s, %s, %s, %s, %s, %s);
+        INSERT INTO "{MATCHED_AUDIOS_TABLE_NAME}" ("{FIELD_MATCHED_AUDIO_ID}","{FIELD_MATCHED_AUDIO_NAME}"","{FIELD_MATCHED_AUDIO_FORMAT}","{FIELD_MATCHED_AUDIO_STORAGE_PATH}","{FIELD_MATCHED_AUDIO_DATE_CREATED}")
+        VALUES (%s, %s, %s, %s, %s);
     """
 
     INSERT_MATCHED_INFORMATION = f"""
@@ -172,7 +171,7 @@ class PostgreSQLDatabase(CommonDatabase):
 
     SELECT_NUM_FINGERPRINTS = f'SELECT COUNT(*) AS n FROM "{FINGERPRINTS_TABLE_NAME}";'
 
-    COUNT_MATCHED_AUDIOS = f'SELECT COUNT(*)  FROM "{MATCHED_AUDIOS_TABLE_NAME}" WHERE "{FIELD_MATCHED_AUDIO_FILE_SHA1}" = %s;'
+    COUNT_MATCHED_AUDIOS = f'SELECT COUNT(*)  FROM "{MATCHED_AUDIOS_TABLE_NAME}" WHERE "{FIELD_MATCHED_AUDIO_ID}" = %s;'
 
     SELECT_UNIQUE_AUDIO_IDS = f"""
         SELECT COUNT("{FIELD_AUDIO_ID}") AS n
@@ -275,18 +274,17 @@ class PostgreSQLDatabase(CommonDatabase):
             cur.execute(self.INSERT_AUDIOS, (audio_id, audio_name, file_hash, total_hashes))
             return cur.fetchone()[0]
 
-    def insert_matched_audios(self, id: str, name: str, file_sha1: str, format: str, storage_path: str, date_created: str):
+    def insert_matched_audios(self, id: str, name: str, format: str, storage_path: str, date_created: str):
         """
         Inserts a matched audio into the database, returns the new
         identifier of the audio.
         :param id: The id of the audio.
         :param name: The name of the audio.
-        :param file_sha1: The file sha1 of the audio.
         :param format: The format of the audio.
         :param storage_path: The storage path of the audio.
         """
         with self.cursor() as cur:
-            cur.execute(self.INSERT_MATCHED_AUDIOS, (id, name, file_sha1, format, storage_path, date_created))
+            cur.execute(self.INSERT_MATCHED_AUDIOS, (id, name, format, storage_path, date_created))
 
     def insert_matched_information(self, id: str, audio_id: str, audio_name: str, total_time: float,
                                    fingerprint_time: float, query_time: float, align_time: float, date_created: str):

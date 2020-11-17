@@ -33,6 +33,6 @@ if __name__ == '__main__':
 
     # Or use a recognizer without the shortcut, in anyway you would like
     recognizer = FileRecognizer(djv)
-    results = recognizer.recognize_file("test/woodward_43s.wav")
+    results = recognizer.recognize_file("test/woodward_43s.wav", '1')
     print(f"No shortcut, we recognized: {results}\n")
 
