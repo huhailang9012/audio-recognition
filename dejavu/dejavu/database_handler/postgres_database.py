@@ -7,9 +7,8 @@ from dejavu.base_classes.common_database import CommonDatabase
 from dejavu.config.settings import (FIELD_FILE_SHA1, FIELD_FINGERPRINTED,
                                     FIELD_HASH, FIELD_OFFSET, FIELD_AUDIO_ID,
                                     FIELD_AUDIO_NAME, FIELD_TOTAL_HASHES,
-                                    FIELD_MATCHED_AUDIO_ID, FIELD_MATCHED_AUDIO_NAME,
-                                    FIELD_MATCHED_AUDIO_FILE_SHA1, FIELD_MATCHED_AUDIO_FORMAT,
-                                    FIELD_MATCHED_AUDIO_STORAGE_PATH, FIELD_MATCHED_AUDIO_DATE_CREATED,
+                                    FIELD_MATCHED_AUDIO_ID,
+                                    FIELD_MATCHED_AUDIO_FILE_MD5, FIELD_MATCHED_AUDIO_RELATED_KEY,
                                     FIELD_MATCHED_INFORMATION_ID, FIELD_MATCHED_INFORMATION_AUDIO_ID, FIELD_MATCHED_INFORMATION_AUDIO_NAME,
                                     FIELD_MATCHED_INFORMATION_TOTAL_TIME, FIELD_MATCHED_INFORMATION_FINGERPRINT_TIME,
                                     FIELD_MATCHED_INFORMATION_QUERY_TIME, FIELD_MATCHED_INFORMATION_ALIGN_TIME,
@@ -65,19 +64,6 @@ class PostgreSQLDatabase(CommonDatabase):
         USING hash ("{FIELD_HASH}");
     """
 
-    CREATE_MATCHED_AUDIO_TABLE = f"""
-        CREATE TABLE IF NOT EXISTS "{MATCHED_AUDIOS_TABLE_NAME}" (
-            "{FIELD_MATCHED_AUDIO_ID}" CHAR(32) PRIMARY KEY
-        ,   "{FIELD_MATCHED_AUDIO_NAME}" VARCHAR(64) NOT NULL
-        ,   "{FIELD_MATCHED_AUDIO_FORMAT}" VARCHAR(8) NOT NULL
-        ,   "{FIELD_MATCHED_AUDIO_STORAGE_PATH}" VARCHAR(256) NOT NULL
-        ,   "{FIELD_MATCHED_AUDIO_DATE_CREATED}" CHAR(19) NOT NULL
-        );
-
-        CREATE INDEX IF NOT EXISTS "ix_{FINGERPRINTS_TABLE_NAME}_{FIELD_HASH}" ON "{FINGERPRINTS_TABLE_NAME}"
-        USING hash ("{FIELD_HASH}");
-    """
-
     CREATE_MATCHED_INFORMATION_TABLE = f"""
         CREATE TABLE IF NOT EXISTS "{MATCHED_INFORMATION_TABLE_NAME}" (
             "{FIELD_MATCHED_INFORMATION_ID}" CHAR(32) PRIMARY KEY
@@ -88,7 +74,7 @@ class PostgreSQLDatabase(CommonDatabase):
         ,   "{FIELD_MATCHED_INFORMATION_QUERY_TIME}" REAL
         ,   "{FIELD_MATCHED_INFORMATION_ALIGN_TIME}" REAL
         ,   "{FIELD_MATCHED_INFORMATION_DATE_CREATED}" CHAR(19) NOT NULL
-        ,   CONSTRAINT "fk_{MATCHED_INFORMATION_TABLE_NAME}_{FIELD_MATCHED_INFORMATION_AUDIO_ID}" FOREIGN KEY ("{FIELD_MATCHED_INFORMATION_AUDIO_ID}") REFERENCES "{MATCHED_AUDIOS_TABLE_NAME}"("{FIELD_MATCHED_AUDIO_ID}")
+        ,   "{FIELD_MATCHED_AUDIO_RELATED_KEY}" VARCHAR(64)
         );
     """
 
@@ -128,14 +114,9 @@ class PostgreSQLDatabase(CommonDatabase):
         RETURNING "{FIELD_AUDIO_ID}";
     """
 
-    INSERT_MATCHED_AUDIOS = f"""
-        INSERT INTO "{MATCHED_AUDIOS_TABLE_NAME}" ("{FIELD_MATCHED_AUDIO_ID}","{FIELD_MATCHED_AUDIO_NAME}"","{FIELD_MATCHED_AUDIO_FORMAT}","{FIELD_MATCHED_AUDIO_STORAGE_PATH}","{FIELD_MATCHED_AUDIO_DATE_CREATED}")
-        VALUES (%s, %s, %s, %s, %s);
-    """
-
     INSERT_MATCHED_INFORMATION = f"""
-        INSERT INTO "{MATCHED_INFORMATION_TABLE_NAME}" ("{FIELD_MATCHED_INFORMATION_ID}","{FIELD_MATCHED_INFORMATION_AUDIO_ID}","{FIELD_MATCHED_INFORMATION_AUDIO_NAME}", "{FIELD_MATCHED_INFORMATION_TOTAL_TIME}","{FIELD_MATCHED_INFORMATION_FINGERPRINT_TIME}","{FIELD_MATCHED_INFORMATION_QUERY_TIME}","{FIELD_MATCHED_INFORMATION_ALIGN_TIME}","{FIELD_MATCHED_INFORMATION_DATE_CREATED}")
-        VALUES (%s, %s, %s, %s, %s, %s, %s, %s);
+        INSERT INTO "{MATCHED_INFORMATION_TABLE_NAME}" ("{FIELD_MATCHED_INFORMATION_ID}","{FIELD_MATCHED_INFORMATION_AUDIO_ID}","{FIELD_MATCHED_INFORMATION_AUDIO_NAME}", "{FIELD_MATCHED_INFORMATION_TOTAL_TIME}","{FIELD_MATCHED_INFORMATION_FINGERPRINT_TIME}","{FIELD_MATCHED_INFORMATION_QUERY_TIME}","{FIELD_MATCHED_INFORMATION_ALIGN_TIME}","{FIELD_MATCHED_INFORMATION_DATE_CREATED}","{FIELD_MATCHED_AUDIO_RELATED_KEY}")
+        VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s);
     """
 
     INSERT_RELATED_AUDIOS = f"""
@@ -171,7 +152,7 @@ class PostgreSQLDatabase(CommonDatabase):
 
     SELECT_NUM_FINGERPRINTS = f'SELECT COUNT(*) AS n FROM "{FINGERPRINTS_TABLE_NAME}";'
 
-    COUNT_MATCHED_AUDIOS = f'SELECT COUNT(*)  FROM "{MATCHED_AUDIOS_TABLE_NAME}" WHERE "{FIELD_MATCHED_AUDIO_ID}" = %s;'
+    COUNT_MATCHED_AUDIOS = f'SELECT COUNT(*)  FROM "{MATCHED_AUDIOS_TABLE_NAME}" WHERE "{FIELD_MATCHED_AUDIO_FILE_MD5}" = %s;'
 
     SELECT_UNIQUE_AUDIO_IDS = f"""
         SELECT COUNT("{FIELD_AUDIO_ID}") AS n
@@ -200,7 +181,9 @@ class PostgreSQLDatabase(CommonDatabase):
         ,   "{FIELD_MATCHED_INFORMATION_QUERY_TIME}"
         ,   "{FIELD_MATCHED_INFORMATION_ALIGN_TIME}"
         ,   "{FIELD_MATCHED_INFORMATION_DATE_CREATED}"
+        ,   "{FIELD_MATCHED_AUDIO_RELATED_KEY}"
         FROM "{MATCHED_INFORMATION_TABLE_NAME}"
+        WHERE "{FIELD_MATCHED_AUDIO_RELATED_KEY}" = %s
         ORDER BY "{FIELD_MATCHED_INFORMATION_DATE_CREATED}" DESC LIMIT 20;
     """
 
@@ -274,23 +257,11 @@ class PostgreSQLDatabase(CommonDatabase):
             cur.execute(self.INSERT_AUDIOS, (audio_id, audio_name, file_hash, total_hashes))
             return cur.fetchone()[0]
 
-    def insert_matched_audios(self, id: str, name: str, format: str, storage_path: str, date_created: str):
-        """
-        Inserts a matched audio into the database, returns the new
-        identifier of the audio.
-        :param id: The id of the audio.
-        :param name: The name of the audio.
-        :param format: The format of the audio.
-        :param storage_path: The storage path of the audio.
-        """
-        with self.cursor() as cur:
-            cur.execute(self.INSERT_MATCHED_AUDIOS, (id, name, format, storage_path, date_created))
-
     def insert_matched_information(self, id: str, audio_id: str, audio_name: str, total_time: float,
-                                   fingerprint_time: float, query_time: float, align_time: float, date_created: str):
+                                   fingerprint_time: float, query_time: float, align_time: float, date_created: str, related_key: str):
         with self.cursor() as cur:
             cur.execute(self.INSERT_MATCHED_INFORMATION,
-                        (id, audio_id, audio_name, total_time, fingerprint_time, query_time, align_time, date_created))
+                        (id, audio_id, audio_name, total_time, fingerprint_time, query_time, align_time, date_created, related_key))
 
     def insert_related_audios(self, id: str, audio_id: str, related_audio_id: str, related_audio_name: str,
                               match_id: str, input_total_hashes: int, fingerprinted_hashes_in_db: int,

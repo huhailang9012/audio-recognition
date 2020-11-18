@@ -2,6 +2,7 @@ from time import time
 from typing import Dict
 import os
 import uuid
+import hashlib
 from datetime import datetime
 import dejavu.logic.decoder as decoder
 from dejavu.base_classes.base_recognizer import BaseRecognizer
@@ -18,22 +19,23 @@ class FileRecognizer(BaseRecognizer):
     def __init__(self, dejavu):
         super().__init__(dejavu)
 
-    def recognize_file(self, filename: str, audio_id: str) -> Dict[str, any]:
-        channels, self.Fs, sha1 = decoder.read(filename, self.dejavu.limit)
-        c = self.dejavu.db.count_matched_audios_by_id(audio_id)
+    def recognize_file(self, local_audio_path: str, related_key: str, audio_id: str) -> Dict[str, any]:
+        channels, self.Fs, sha1 = decoder.read(local_audio_path, self.dejavu.limit)
+        with open(local_audio_path, 'rb') as fp:
+            data = fp.read()
+        file_md5 = hashlib.md5(data).hexdigest()
+        c = self.dejavu.db.count_matched_audios_by_md5(file_md5)
         if c > 0:
-            return Dict["None", "None"]
+            return Dict["Already recognized", "Already recognized"]
         # insert a matched audios into database
-        name = os.path.basename(filename)
-        auido_id = uuid.uuid1().hex
+        name = os.path.basename(local_audio_path)
         now = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-        self.dejavu.db.insert_matched_audios(auido_id, name, "aac", filename, now)
         match_id = uuid.uuid1().hex
         t = time()
         matches, fingerprint_time, query_time, align_time = self._recognize(*channels)
         t = time() - t
         # insert a matched information into database
-        self.dejavu.db.insert_matched_information(match_id,auido_id, name, t, fingerprint_time, query_time, align_time, now)
+        self.dejavu.db.insert_matched_information(match_id, audio_id, name, t, fingerprint_time, query_time, align_time, now, related_key)
 
         for match in matches:
             relate_audio_id = match[AUDIO_ID]
@@ -48,7 +50,7 @@ class FileRecognizer(BaseRecognizer):
             file_sha1 = match[FIELD_FILE_SHA1]
             related_id = uuid.uuid1().hex
             # insert a related audios into database
-            self.dejavu.db.insert_related_audios(related_id,auido_id,relate_audio_id,relate_audio_name,match_id, input_hashes, fingerprint_hashes,
+            self.dejavu.db.insert_related_audios(related_id,audio_id,relate_audio_id,relate_audio_name,match_id, input_hashes, fingerprint_hashes,
                                                  hashes_matched,input_confidence,fingerprinted_confidence,offset, offset_seconds, file_sha1)
         results = {
             TOTAL_TIME: t,

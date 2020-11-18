@@ -190,8 +190,8 @@ class Dejavu:
 
         return matches, dedup_hashes, query_time
 
-    def find_matched_info(self) -> list:
-        matched_infos = self.db.get_matched_info()
+    def find_matched_info(self, related_key) -> list:
+        matched_infos = self.db.get_matched_info(related_key)
         print("matched_infos",matched_infos)
         matched_informations = list()
         for info in matched_infos:

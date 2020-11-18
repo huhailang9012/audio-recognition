@@ -102,14 +102,14 @@ class CommonDatabase(BaseDatabase, metaclass=abc.ABCMeta):
             cur.execute(self.SELECT_AUDIOS)
             return list(cur)
 
-    def get_matched_info(self) -> List[Dict[str, str]]:
+    def get_matched_info(self, related_key: str) -> List[Dict[str, str]]:
         """
         Returns matched information list
 
         :return: a dictionary with the information info list.
         """
         with self.cursor(dictionary=True) as cur:
-            cur.execute(self.SELECT_MATCHED_INFORMATION)
+            cur.execute(self.SELECT_MATCHED_INFORMATION, related_key)
             return list(cur)
 
     def get_related_audios(self, audio_id: str) -> List[Dict[str, str]]:
@@ -133,14 +133,14 @@ class CommonDatabase(BaseDatabase, metaclass=abc.ABCMeta):
             cur.execute(self.SELECT_AUDIO, (audio_id,))
             return cur.fetchone()
 
-    def count_matched_audios_by_id(self, audio_id: str) -> int:
+    def count_matched_audios_by_md5(self, md5: str) -> int:
         """
         count matched audio num.
-        :param audio_id: audio id.
+        :param md5.
         :return: num.
         """
         with self.cursor(dictionary=True) as cur:
-            cur.execute(self.COUNT_MATCHED_AUDIOS, (audio_id,))
+            cur.execute(self.COUNT_MATCHED_AUDIOS, (md5,))
             count = cur.fetchone()[0] if cur.rowcount != 0 else 0
 
             return count
@@ -170,19 +170,8 @@ class CommonDatabase(BaseDatabase, metaclass=abc.ABCMeta):
         pass
 
     @abc.abstractmethod
-    def insert_matched_audios(self, id: str, name: str, format: str, storage_path: str, date_created: str):
-        """
-        Inserts a matched audio into the database, returns the new
-        identifier of the audio.
-        :param id: The id of the audio.
-        :param name: The name of the audio.
-        :param format: The format of the audio.
-        :param storage_path: The storage path of the audio.
-        """
-        pass
-
-    @abc.abstractmethod
-    def insert_matched_information(self, id: str, audio_id: str, audio_name: str, total_time: float, fingerprint_time: float, query_time: float, align_time: float, date_created: str):
+    def insert_matched_information(self, id: str, audio_id: str, audio_name: str, total_time: float,
+                                   fingerprint_time: float, query_time: float, align_time: float, date_created: str, related_key: str):
         pass
 
     @abc.abstractmethod

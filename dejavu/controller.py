@@ -17,17 +17,17 @@ djv = Dejavu(config)
 
 
 @app.get("/matched/information/index")
-def index():
+def index(related_key: str):
 
-    infos = djv.find_matched_info()
+    infos = djv.find_matched_info(related_key)
     result = json.dumps(infos, ensure_ascii=False)
     return {"success": True, "code": 0, "msg": "ok", "data": result}
 
 
 @app.post("/target/audio/recognize")
-def recognize_target_audio(audio_id: str, audio_path: str):
+def recognize_target_audio(audio_id: str, related_key: str, local_audio_path: str):
 
-    FileRecognizer(djv).recognize_file(audio_path, audio_id)
+    FileRecognizer(djv).recognize_file(local_audio_path, related_key, audio_id)
     return {"success": True, "code": 0, "msg": "ok"}
 
 
