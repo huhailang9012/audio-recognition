@@ -4,6 +4,7 @@ services:
     build:
       context: docker/postgres
       network: host
+    container_name: dejavu-db
     environment:
       - POSTGRES_DB=audio_recognition
       - POSTGRES_USER=postgres
@@ -16,13 +17,17 @@ services:
     build:
       context: docker/python
       network: host
+    container_name: dejavu-app
     volumes:
       - .:/code
+      - E:/docker_data/logs:/data/logs
+      - E:/docker_data/files:/data/files
+      - E:/docker_data/config:/data/config
     depends_on:
       - db
     networks:
       - db_network
     ports:
-      - "8003:8003"
+      - "8003:8000"
 networks:
   db_network:

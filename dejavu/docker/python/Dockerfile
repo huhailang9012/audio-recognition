@@ -10,4 +10,4 @@ WORKDIR /code
 COPY ./ /code/
 RUN cd /code
 
-CMD uvicorn controller:app --reload --port 8003 --host 0.0.0.0
+CMD uvicorn controller:app --reload --port 8000 --host 0.0.0.0

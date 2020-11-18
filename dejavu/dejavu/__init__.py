@@ -192,7 +192,6 @@ class Dejavu:
 
     def find_matched_info(self, related_key) -> list:
         matched_infos = self.db.get_matched_info(related_key)
-        print("matched_infos",matched_infos)
         matched_informations = list()
         for info in matched_infos:
             audio_id = info.get(FIELD_MATCHED_INFORMATION_AUDIO_ID, None)
@@ -224,8 +223,6 @@ class Dejavu:
                 related_audios.append(audio)
             matched = Matched_Information(audio_id, audio_name, total_time, fingerprint_time, align_time, query_time,
                                           related_audios, date_created)
-            result = json.dumps(matched, default=lambda obj: obj.__dict__, sort_keys=False, indent=4)
-            print(result)
             matched_informations.append(matched)
         return matched_informations
 

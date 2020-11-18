@@ -12,7 +12,7 @@ from dejavu.config.settings import (FIELD_FILE_SHA1, FIELD_FINGERPRINTED,
                                     FIELD_MATCHED_INFORMATION_ID, FIELD_MATCHED_INFORMATION_AUDIO_ID, FIELD_MATCHED_INFORMATION_AUDIO_NAME,
                                     FIELD_MATCHED_INFORMATION_TOTAL_TIME, FIELD_MATCHED_INFORMATION_FINGERPRINT_TIME,
                                     FIELD_MATCHED_INFORMATION_QUERY_TIME, FIELD_MATCHED_INFORMATION_ALIGN_TIME,
-                                    FIELD_MATCHED_INFORMATION_DATE_CREATED,
+                                    FIELD_MATCHED_INFORMATION_DATE_CREATED,FIELD_MATCHED_INFORMATION_AUDIO_MD5,
                                     FIELD_RELATED_AUDIOS_ID, FIELD_RELATED_AUDIOS_AUDIO_ID,
                                     FIELD_RELATED_AUDIOS_RELATED_AUDIO_ID,
                                     FIELD_RELATED_AUDIOS_RELATED_AUDIO_NAME, FIELD_RELATED_AUDIOS_MATCHED_ID,
@@ -69,6 +69,7 @@ class PostgreSQLDatabase(CommonDatabase):
             "{FIELD_MATCHED_INFORMATION_ID}" CHAR(32) PRIMARY KEY
         ,   "{FIELD_MATCHED_INFORMATION_AUDIO_ID}" CHAR(32) NOT NULL
         ,   "{FIELD_MATCHED_INFORMATION_AUDIO_NAME}" VARCHAR (128) NOT NULL
+        ,   "{FIELD_MATCHED_INFORMATION_AUDIO_MD5}" CHAR(32) NOT NULL
         ,   "{FIELD_MATCHED_INFORMATION_TOTAL_TIME}" REAL
         ,   "{FIELD_MATCHED_INFORMATION_FINGERPRINT_TIME}" REAL
         ,   "{FIELD_MATCHED_INFORMATION_QUERY_TIME}" REAL
@@ -93,7 +94,6 @@ class PostgreSQLDatabase(CommonDatabase):
         ,   "{FIELD_RELATED_AUDIOS_OFFSET}" INT
         ,   "{FIELD_RELATED_AUDIOS_OFFSET_SECONDS}" INT
         ,   "{FIELD_RELATED_AUDIOS_FILE_SHA1}" BYTEA
-        ,   CONSTRAINT "fk_{RELATED_AUDIOS_TABLE_NAME}_{FIELD_RELATED_AUDIOS_AUDIO_ID}" FOREIGN KEY ("{FIELD_RELATED_AUDIOS_AUDIO_ID}") REFERENCES "{MATCHED_AUDIOS_TABLE_NAME}"("{FIELD_MATCHED_AUDIO_ID}")
         ,   CONSTRAINT "fk_{RELATED_AUDIOS_TABLE_NAME}_{FIELD_RELATED_AUDIOS_RELATED_AUDIO_ID}" FOREIGN KEY ("{FIELD_RELATED_AUDIOS_RELATED_AUDIO_ID}") REFERENCES "{AUDIOS_TABLE_NAME}"("{FIELD_AUDIO_ID}")
         ,   CONSTRAINT "fk_{RELATED_AUDIOS_TABLE_NAME}_{FIELD_RELATED_AUDIOS_MATCHED_ID}" FOREIGN KEY ("{FIELD_RELATED_AUDIOS_MATCHED_ID}") REFERENCES "{MATCHED_INFORMATION_TABLE_NAME}"("{FIELD_MATCHED_INFORMATION_ID}")
         );
@@ -115,8 +115,8 @@ class PostgreSQLDatabase(CommonDatabase):
     """
 
     INSERT_MATCHED_INFORMATION = f"""
-        INSERT INTO "{MATCHED_INFORMATION_TABLE_NAME}" ("{FIELD_MATCHED_INFORMATION_ID}","{FIELD_MATCHED_INFORMATION_AUDIO_ID}","{FIELD_MATCHED_INFORMATION_AUDIO_NAME}", "{FIELD_MATCHED_INFORMATION_TOTAL_TIME}","{FIELD_MATCHED_INFORMATION_FINGERPRINT_TIME}","{FIELD_MATCHED_INFORMATION_QUERY_TIME}","{FIELD_MATCHED_INFORMATION_ALIGN_TIME}","{FIELD_MATCHED_INFORMATION_DATE_CREATED}","{FIELD_MATCHED_AUDIO_RELATED_KEY}")
-        VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s);
+        INSERT INTO "{MATCHED_INFORMATION_TABLE_NAME}" ("{FIELD_MATCHED_INFORMATION_ID}","{FIELD_MATCHED_INFORMATION_AUDIO_ID}","{FIELD_MATCHED_INFORMATION_AUDIO_NAME}", "{FIELD_MATCHED_INFORMATION_AUDIO_MD5}","{FIELD_MATCHED_INFORMATION_TOTAL_TIME}","{FIELD_MATCHED_INFORMATION_FINGERPRINT_TIME}","{FIELD_MATCHED_INFORMATION_QUERY_TIME}","{FIELD_MATCHED_INFORMATION_ALIGN_TIME}","{FIELD_MATCHED_INFORMATION_DATE_CREATED}","{FIELD_MATCHED_AUDIO_RELATED_KEY}")
+        VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s);
     """
 
     INSERT_RELATED_AUDIOS = f"""
@@ -152,7 +152,7 @@ class PostgreSQLDatabase(CommonDatabase):
 
     SELECT_NUM_FINGERPRINTS = f'SELECT COUNT(*) AS n FROM "{FINGERPRINTS_TABLE_NAME}";'
 
-    COUNT_MATCHED_AUDIOS = f'SELECT COUNT(*)  FROM "{MATCHED_AUDIOS_TABLE_NAME}" WHERE "{FIELD_MATCHED_AUDIO_FILE_MD5}" = %s;'
+    COUNT_MATCHED_AUDIOS = f'SELECT COUNT(*)  FROM "{MATCHED_INFORMATION_TABLE_NAME}" WHERE "{FIELD_MATCHED_INFORMATION_AUDIO_MD5}" = %s;'
 
     SELECT_UNIQUE_AUDIO_IDS = f"""
         SELECT COUNT("{FIELD_AUDIO_ID}") AS n
@@ -176,6 +176,7 @@ class PostgreSQLDatabase(CommonDatabase):
             "{FIELD_MATCHED_INFORMATION_ID}"
         ,   "{FIELD_MATCHED_INFORMATION_AUDIO_ID}"
         ,   "{FIELD_MATCHED_INFORMATION_AUDIO_NAME}"
+        ,   "{FIELD_MATCHED_INFORMATION_AUDIO_MD5}"
         ,   "{FIELD_MATCHED_INFORMATION_TOTAL_TIME}"
         ,   "{FIELD_MATCHED_INFORMATION_FINGERPRINT_TIME}"
         ,   "{FIELD_MATCHED_INFORMATION_QUERY_TIME}"
@@ -209,7 +210,6 @@ class PostgreSQLDatabase(CommonDatabase):
     # DROPS
     DROP_FINGERPRINTS = F'DROP TABLE IF EXISTS "{FINGERPRINTS_TABLE_NAME}";'
     DROP_AUDIOS = F'DROP TABLE IF EXISTS "{AUDIOS_TABLE_NAME}";'
-    DROP_MATCHED_AUDIOS = F'DROP TABLE IF EXISTS "{MATCHED_AUDIOS_TABLE_NAME}";'
     DROP_MATCHED_INFORMATION = F'DROP TABLE IF EXISTS "{MATCHED_INFORMATION_TABLE_NAME}";'
     DROP_RELATED_AUDIOS = F'DROP TABLE IF EXISTS "{RELATED_AUDIOS_TABLE_NAME}";'
 
@@ -257,11 +257,11 @@ class PostgreSQLDatabase(CommonDatabase):
             cur.execute(self.INSERT_AUDIOS, (audio_id, audio_name, file_hash, total_hashes))
             return cur.fetchone()[0]
 
-    def insert_matched_information(self, id: str, audio_id: str, audio_name: str, total_time: float,
+    def insert_matched_information(self, id: str, audio_id: str, audio_name: str, audio_md5: str,total_time: float,
                                    fingerprint_time: float, query_time: float, align_time: float, date_created: str, related_key: str):
         with self.cursor() as cur:
             cur.execute(self.INSERT_MATCHED_INFORMATION,
-                        (id, audio_id, audio_name, total_time, fingerprint_time, query_time, align_time, date_created, related_key))
+                        (id, audio_id, audio_name, audio_md5, total_time, fingerprint_time, query_time, align_time, date_created, related_key))
 
     def insert_related_audios(self, id: str, audio_id: str, related_audio_id: str, related_audio_name: str,
                               match_id: str, input_total_hashes: int, fingerprinted_hashes_in_db: int,
