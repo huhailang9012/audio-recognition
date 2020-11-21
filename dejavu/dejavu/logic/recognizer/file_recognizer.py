@@ -26,7 +26,7 @@ class FileRecognizer(BaseRecognizer):
         file_md5 = hashlib.md5(data).hexdigest()
         c = self.dejavu.db.count_matched_audios_by_md5(file_md5)
         if c > 0:
-            return Dict["Already recognized", "Already recognized"]
+            return Dict["None", "None"]
         # insert a matched audios into database
         name = os.path.basename(local_audio_path)
         now = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
@@ -35,7 +35,7 @@ class FileRecognizer(BaseRecognizer):
         matches, fingerprint_time, query_time, align_time = self._recognize(*channels)
         t = time() - t
         # insert a matched information into database
-        self.dejavu.db.insert_matched_information(match_id, audio_id, name, t, fingerprint_time, query_time, align_time, now, related_key)
+        self.dejavu.db.insert_matched_information(match_id, audio_id, name, file_md5, t, fingerprint_time, query_time, align_time, now, related_key)
 
         for match in matches:
             relate_audio_id = match[AUDIO_ID]

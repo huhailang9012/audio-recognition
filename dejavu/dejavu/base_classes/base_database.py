@@ -146,7 +146,7 @@ class BaseDatabase(object, metaclass=abc.ABCMeta):
         pass
 
     @abc.abstractmethod
-    def insert_matched_information(self, id: str, audio_id: str, audio_name: str, total_time: float,
+    def insert_matched_information(self, id: str, audio_id: str, audio_name: str, audio_md5: str,total_time: float,
                                    fingerprint_time: float, query_time: float, align_time: float, date_created: str, related_key: str):
         pass
 

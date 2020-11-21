@@ -34,7 +34,6 @@ class CommonDatabase(BaseDatabase, metaclass=abc.ABCMeta):
             cur.execute(self.CREATE_AUDIOS_TABLE)
             cur.execute(self.CREATE_FINGERPRINTS_TABLE)
             cur.execute(self.DELETE_UNFINGERPRINTED)
-            cur.execute(self.CREATE_MATCHED_AUDIO_TABLE)
             cur.execute(self.CREATE_MATCHED_INFORMATION_TABLE)
             cur.execute(self.CREATE_RELATED_AUDIOS_TABLE)
 
@@ -46,7 +45,6 @@ class CommonDatabase(BaseDatabase, metaclass=abc.ABCMeta):
 
             cur.execute(self.DROP_RELATED_AUDIOS)
             cur.execute(self.DROP_MATCHED_INFORMATION)
-            cur.execute(self.DROP_MATCHED_AUDIOS)
             cur.execute(self.DROP_FINGERPRINTS)
             cur.execute(self.DROP_AUDIOS)
         self.setup()
@@ -102,14 +100,14 @@ class CommonDatabase(BaseDatabase, metaclass=abc.ABCMeta):
             cur.execute(self.SELECT_AUDIOS)
             return list(cur)
 
-    def get_matched_info(self, related_key: str) -> List[Dict[str, str]]:
+    def get_matched_info(self, related_key: str) -> List[Dict[str, any]]:
         """
         Returns matched information list
 
         :return: a dictionary with the information info list.
         """
         with self.cursor(dictionary=True) as cur:
-            cur.execute(self.SELECT_MATCHED_INFORMATION, related_key)
+            cur.execute(self.SELECT_MATCHED_INFORMATION, (related_key,))
             return list(cur)
 
     def get_related_audios(self, audio_id: str) -> List[Dict[str, str]]:
@@ -170,7 +168,7 @@ class CommonDatabase(BaseDatabase, metaclass=abc.ABCMeta):
         pass
 
     @abc.abstractmethod
-    def insert_matched_information(self, id: str, audio_id: str, audio_name: str, total_time: float,
+    def insert_matched_information(self, id: str, audio_id: str, audio_name: str, audio_md5: str,total_time: float,
                                    fingerprint_time: float, query_time: float, align_time: float, date_created: str, related_key: str):
         pass
 

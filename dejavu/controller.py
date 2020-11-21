@@ -20,7 +20,7 @@ djv = Dejavu(config)
 def index(related_key: str):
 
     infos = djv.find_matched_info(related_key)
-    result = json.dumps(infos, ensure_ascii=False)
+    result = json.dumps(infos, default=lambda obj: obj.__dict__, sort_keys=False, indent=4)
     return {"success": True, "code": 0, "msg": "ok", "data": result}
 
 
@@ -34,5 +34,5 @@ def recognize_target_audio(audio_id: str, related_key: str, local_audio_path: st
 @app.post("/source/audio/import")
 def import_source_audio(source_path: str, format: str):
 
-    # djv.fingerprint_directory(source_path, ["." + format])
+    djv.fingerprint_directory(source_path, ["." + format])
     return {"success": True, "code": 0, "msg": "ok"}

@@ -2,13 +2,17 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="095445b3-65f1-4d1b-8058-db620e47db64" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controller.py" beforeDir="false" afterPath="$PROJECT_DIR$/controller.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dejavu/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/dejavu/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dejavu/base_classes/base_database.py" beforeDir="false" afterPath="$PROJECT_DIR$/dejavu/base_classes/base_database.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dejavu/base_classes/common_database.py" beforeDir="false" afterPath="$PROJECT_DIR$/dejavu/base_classes/common_database.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dejavu/config/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/dejavu/config/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dejavu/database_handler/postgres_database.py" beforeDir="false" afterPath="$PROJECT_DIR$/dejavu/database_handler/postgres_database.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dejavu/logic/recognizer/file_recognizer.py" beforeDir="false" afterPath="$PROJECT_DIR$/dejavu/logic/recognizer/file_recognizer.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/docker-compose.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docker/.gitkeep" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docker/postgres/Dockerfile" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docker/postgres/init.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docker/python/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker/python/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/docker/python/Dockerfile" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -25,14 +29,14 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
+  <component name="JupyterTrust" id="a6a9a8dc-fa63-4a64-bd6a-6d99dbc36605" />
   <component name="ProjectId" id="1is1Dh1roRQipdi9iJlRqlBAimT" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
-    <option name="showExcludedFiles" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
@@ -40,7 +44,7 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="E:\Project\Audio-Recognition\dejavu" />
+      <recent name="E:\Project\ar\dejavu" />
     </key>
   </component>
   <component name="RunManager" selected="Python.person (1)">
@@ -95,6 +99,7 @@
       </list>
     </recent_temporary>
   </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -131,43 +136,15 @@
       <workItem from="1605512043809" duration="609000" />
       <workItem from="1605520813471" duration="3202000" />
       <workItem from="1605616079118" duration="1000000" />
-      <workItem from="1605618558607" duration="627000" />
-      <workItem from="1605660865359" duration="842000" />
-      <workItem from="1605662677724" duration="2679000" />
-      <workItem from="1605669954530" duration="11000" />
-      <workItem from="1605683329129" duration="641000" />
-      <workItem from="1605694950869" duration="27000" />
-      <workItem from="1605699954927" duration="2494000" />
-      <workItem from="1605788341097" duration="25000" />
-      <workItem from="1605789080743" duration="901000" />
-      <workItem from="1605953366197" duration="627000" />
-      <workItem from="1605955804808" duration="656000" />
-      <workItem from="1605958482915" duration="69000" />
-      <workItem from="1605961995293" duration="128000" />
+      <workItem from="1605666781158" duration="4289000" />
+      <workItem from="1605677710710" duration="7187000" />
     </task>
-    <task id="LOCAL-00001" summary="1.完成带关键字搜索开发&#10;2.删除匹配音频表">
-      <created>1605664594228</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1605664594228</updated>
-    </task>
-    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
-    <option name="version" value="1" />
-  </component>
-  <component name="VcsManagerConfiguration">
-    <MESSAGE value="1.完成带关键字搜索开发&#10;2.删除匹配音频表" />
-    <option name="LAST_COMMIT_MESSAGE" value="1.完成带关键字搜索开发&#10;2.删除匹配音频表" />
+    <option name="version" value="3" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="448" y="0" key="CommitChangelistDialog2" timestamp="1605962184378">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state x="2480" y="112" key="CommitChangelistDialog2/0.0.1536.824/1920.0.1920.1040@1920.0.1920.1040" timestamp="1605664592736" />
-    <state x="448" y="0" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1605962184378" />
     <state x="548" y="153" key="FileChooserDialogImpl" timestamp="1605403127788">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -189,33 +166,27 @@
       <screen x="1920" y="0" width="1920" height="1040" />
     </state>
     <state width="1877" height="282" key="GridCell.Tab.0.right/0.0.1536.824/1920.0.1920.1040@1920.0.1920.1040" timestamp="1605013488708" />
-    <state x="2381" y="162" key="SettingsEditor" timestamp="1605344991864">
-      <screen x="1920" y="0" width="1920" height="1040" />
+    <state x="369" y="114" key="SettingsEditor" timestamp="1605684930969">
+      <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="2381" y="162" key="SettingsEditor/0.0.1536.824/1920.0.1920.1040@1920.0.1920.1040" timestamp="1605344991864" />
-    <state x="442" y="191" key="Vcs.Push.Dialog.v2" timestamp="1605962188508">
+    <state x="369" y="114" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1605684930969" />
+    <state x="449" y="236" key="com.intellij.ide.util.TipDialog" timestamp="1605402720519">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="2472" y="241" key="Vcs.Push.Dialog.v2/0.0.1536.824/1920.0.1920.1040@1920.0.1920.1040" timestamp="1605664597417" />
-    <state x="442" y="191" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1605962188508" />
-    <state x="2481" y="298" key="com.intellij.ide.util.TipDialog" timestamp="1605788362153">
-      <screen x="1920" y="0" width="1920" height="1040" />
-    </state>
-    <state x="2481" y="298" key="com.intellij.ide.util.TipDialog/0.0.1536.824/1920.0.1920.1040@1920.0.1920.1040" timestamp="1605788362153" />
+    <state x="2481" y="298" key="com.intellij.ide.util.TipDialog/0.0.1536.824/1920.0.1920.1040@1920.0.1920.1040" timestamp="1605074153316" />
     <state x="449" y="236" key="com.intellij.ide.util.TipDialog/0.0.1536.824@0.0.1536.824" timestamp="1605402720519" />
-    <state x="447" y="11" width="642" height="801" key="find.popup" timestamp="1605955832111">
-      <screen x="0" y="0" width="1536" height="824" />
+    <state x="559" y="14" width="803" height="1011" key="find.popup" timestamp="1605687768620">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="2786" y="29" width="803" height="1011" key="find.popup/0.0.1536.824/1920.0.1920.1040@1920.0.1920.1040" timestamp="1605077018334" />
-    <state x="447" y="11" width="642" height="801" key="find.popup/0.0.1536.824@0.0.1536.824" timestamp="1605955832111" />
-    <state x="485" y="214" key="git4idea.merge.GitPullDialog" timestamp="1605962326553">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state x="485" y="214" key="git4idea.merge.GitPullDialog/0.0.1536.824@0.0.1536.824" timestamp="1605962326553" />
-    <state x="2543" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1605071083335">
-      <screen x="1920" y="0" width="1920" height="1040" />
+    <state x="447" y="11" width="642" height="801" key="find.popup/0.0.1536.824@0.0.1536.824" timestamp="1605685203147" />
+    <state x="559" y="14" width="803" height="1011" key="find.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1605687768620" />
+    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1605687621723">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="2543" y="225" width="672" height="678" key="search.everywhere.popup/0.0.1536.824/1920.0.1920.1040@1920.0.1920.1040" timestamp="1605071083335" />
+    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1605687621723" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/dejavu$json.coverage" NAME="json Coverage Results" MODIFIED="1605007858919" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
