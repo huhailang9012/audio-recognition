@@ -1,28 +1,11 @@
 version: '3'
 services:
-  db:
+  dejavu:
     build:
-      context: docker/postgres
-      network: host
-    environment:
-      - POSTGRES_DB=audio_recognition
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=123456
-    networks:
-      - db_network
-    ports:
-      - "5432:5432"
-  python:
-    build:
-      context: docker/python
+      context: .
       network: host
     volumes:
       - .:/code
-    depends_on:
-      - db
-    networks:
-      - db_network
+    container_name: recognition
     ports:
-      - "8003:8003"
-networks:
-  db_network:
+      - "8003:8000"
