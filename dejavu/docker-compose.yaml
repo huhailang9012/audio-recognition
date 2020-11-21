@@ -1,6 +1,7 @@
 version: '3'
 services:
   dejavu:
+    image: recognition:latest
     build:
       context: .
       network: host
