@@ -7,6 +7,11 @@ services:
       network: host
     volumes:
       - .:/code
+      - /home/snail/Project/docker_data/logs:/data/logs
+      - /home/snail/Project/docker_data/files:/data/files
+      - /home/snail/Project/docker_data/config:/data/config
     container_name: recognition
+    restart: always
+    privileged: true
     ports:
       - "8003:8000"
