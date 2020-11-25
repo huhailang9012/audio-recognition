@@ -103,7 +103,16 @@ class BaseDatabase(object, metaclass=abc.ABCMeta):
         pass
 
     @abc.abstractmethod
-    def get_related_audios(self, audio_id: str) -> List[Dict[str, str]]:
+    def get_source_audio(self, name: str) -> List[Dict[str, any]]:
+        """
+        Returns matched information list
+
+        :return: a dictionary with the information info list.
+        """
+        pass
+
+    @abc.abstractmethod
+    def get_related_audios(self, audio_id: str, confidence: float) -> List[Dict[str, str]]:
         """
         Returns all related audios
 

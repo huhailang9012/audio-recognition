@@ -6,7 +6,7 @@ from dejavu.logic.recognizer.microphone_recognizer import MicrophoneRecognizer
 # load config from a JSON file (or anything outputting a python dictionary)
 config = {
     "database": {
-        "host": "db",
+        "host": "postgres",
         "user": "postgres",
         "password": "password",
         "database": "dejavu"

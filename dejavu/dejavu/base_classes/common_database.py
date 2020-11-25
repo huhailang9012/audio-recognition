@@ -110,14 +110,24 @@ class CommonDatabase(BaseDatabase, metaclass=abc.ABCMeta):
             cur.execute(self.SELECT_MATCHED_INFORMATION, (related_key,))
             return list(cur)
 
-    def get_related_audios(self, audio_id: str) -> List[Dict[str, str]]:
+    def get_source_audio(self, name: str) -> List[Dict[str, any]]:
+        """
+        Returns matched information list
+
+        :return: a dictionary with the information info list.
+        """
+        with self.cursor(dictionary=True) as cur:
+            cur.execute(self.SELECT_SOURCE_AUDIO % name)
+            return list(cur)
+
+    def get_related_audios(self, audio_id: str, confidence: float) -> List[Dict[str, str]]:
         """
         Returns all related audios
 
         :return: a dictionary with the audios info.
         """
         with self.cursor(dictionary=True) as cur:
-            cur.execute(self.SELECT_RELATED_AUDIOS, (audio_id,))
+            cur.execute(self.SELECT_RELATED_AUDIOS, (audio_id, confidence))
             return list(cur)
 
     def get_audio_by_id(self, audio_id: int) -> Dict[str, str]:

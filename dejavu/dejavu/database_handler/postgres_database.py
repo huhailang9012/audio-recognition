@@ -188,6 +188,18 @@ class PostgreSQLDatabase(CommonDatabase):
         ORDER BY "{FIELD_MATCHED_INFORMATION_DATE_CREATED}" DESC LIMIT 20;
     """
 
+    SELECT_SOURCE_AUDIO = f"""
+        SELECT
+            "{FIELD_AUDIO_ID}"
+        ,   "{FIELD_AUDIO_NAME}"
+        ,   "{FIELD_FINGERPRINTED}"
+        ,   upper(encode("{FIELD_FILE_SHA1}", 'hex')) AS "{FIELD_FILE_SHA1}"
+        ,   "{FIELD_TOTAL_HASHES}"
+        FROM "{AUDIOS_TABLE_NAME}"
+        WHERE "{FIELD_AUDIO_NAME}" LIKE '%%%%%s%%%%'
+        LIMIT 5;
+    """
+
     SELECT_RELATED_AUDIOS = f"""
         SELECT
             "{FIELD_RELATED_AUDIOS_ID}"
@@ -204,7 +216,8 @@ class PostgreSQLDatabase(CommonDatabase):
         ,   "{FIELD_RELATED_AUDIOS_OFFSET_SECONDS}"
         ,   upper(encode("{FIELD_RELATED_AUDIOS_FILE_SHA1}", 'hex')) AS "{FIELD_FILE_SHA1}"
         FROM "{RELATED_AUDIOS_TABLE_NAME}"
-        WHERE "{FIELD_RELATED_AUDIOS_AUDIO_ID}" = %s;
+        WHERE "{FIELD_RELATED_AUDIOS_AUDIO_ID}" = %s AND "{FIELD_RELATED_AUDIOS_FINGERPRINTED_CONFIDENCE}" >= %s
+        ORDER BY "{FIELD_RELATED_AUDIOS_FINGERPRINTED_CONFIDENCE}" DESC;
     """
 
     # DROPS

@@ -1,5 +1,3 @@
-from dejavu.base_classes.related_audios import Related_Audios
-
 
 class Matched_Information(object):
 

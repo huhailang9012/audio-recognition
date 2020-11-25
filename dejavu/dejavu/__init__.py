@@ -3,18 +3,18 @@ import os
 import sys
 import traceback
 import uuid
-import json
 from itertools import groupby
 from time import time
 from typing import Dict, List, Tuple
-
+import json
 import dejavu.logic.decoder as decoder
 from dejavu.base_classes.base_database import get_database
 from dejavu.base_classes.matched_information import Matched_Information
+from dejavu.base_classes.souce_audio import Source_Audio
 from dejavu.config.settings import (DEFAULT_FS, DEFAULT_OVERLAP_RATIO,
                                     DEFAULT_WINDOW_SIZE, FIELD_FILE_SHA1,
-                                    FIELD_TOTAL_HASHES,
-                                    FINGERPRINTED_CONFIDENCE,
+                                    FIELD_TOTAL_HASHES,FIELD_AUDIO_ID,FIELD_AUDIO_NAME,
+                                    FINGERPRINTED_CONFIDENCE,FIELD_FINGERPRINTED,
                                     FINGERPRINTED_HASHES, HASHES_MATCHED,
                                     INPUT_CONFIDENCE, INPUT_HASHES, OFFSET,
                                     FIELD_MATCHED_INFORMATION_ID, FIELD_MATCHED_INFORMATION_AUDIO_ID,
@@ -42,7 +42,7 @@ class Dejavu:
         db_cls = get_database(config.get("database_type", "mysql").lower())
 
         self.db = db_cls(**config.get("database", {}))
-        self.db.setup()
+        # self.db.setup()
 
         # if we should limit seconds fingerprinted,
         # None|-1 means use entire track
@@ -190,7 +190,7 @@ class Dejavu:
 
         return matches, dedup_hashes, query_time
 
-    def find_matched_info(self, related_key) -> list:
+    def find_matched_info(self, related_key:str, confidence: float) -> list:
         matched_infos = self.db.get_matched_info(related_key)
         matched_informations = list()
         for info in matched_infos:
@@ -202,7 +202,7 @@ class Dejavu:
             query_time = info.get(FIELD_MATCHED_INFORMATION_QUERY_TIME, None)
             date_created = info.get(FIELD_MATCHED_INFORMATION_DATE_CREATED, None)
             related_audios = list()
-            ras = self.db.get_related_audios(audio_id)
+            ras = self.db.get_related_audios(audio_id, confidence)
             for ra in ras:
                 audio = {
                     FIELD_RELATED_AUDIOS_RELATED_AUDIO_ID: ra.get(FIELD_RELATED_AUDIOS_RELATED_AUDIO_ID, None),
@@ -223,9 +223,21 @@ class Dejavu:
                 related_audios.append(audio)
             matched = Matched_Information(audio_id, audio_name, total_time, fingerprint_time, align_time, query_time,
                                           related_audios, date_created)
-            result = json.dumps(matched, default=lambda obj: obj.__dict__, sort_keys=False, indent=4)
             matched_informations.append(matched)
         return matched_informations
+
+    def find_source_audio(self, name: str) -> list:
+        audios = self.db.get_source_audio(name)
+        source_audios = list()
+        for audio in audios:
+            audio_id = audio.get(FIELD_AUDIO_ID, None)
+            audio_name = audio.get(FIELD_AUDIO_NAME, None)
+            fingerprinted = audio.get(FIELD_FINGERPRINTED, None)
+            file_sha1 = audio.get(FIELD_FILE_SHA1, None)
+            total_hashes = audio.get(FIELD_TOTAL_HASHES, None)
+            source_audio = Source_Audio(audio_id, audio_name, fingerprinted, file_sha1, total_hashes)
+            source_audios.append(source_audio)
+        return source_audios
 
     def align_matches(self, matches: List[Tuple[int, int]], dedup_hashes: Dict[str, int], queried_hashes: int,
                       topn: int = TOPN) -> List[Dict[str, any]]:
