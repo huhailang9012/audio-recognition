@@ -39,8 +39,8 @@ def import_source_audio(source_path: str, format: str):
     return {"success": True, "code": 0, "msg": "ok"}
 
 
-@app.post("/source/audio/query")
+@app.get("/source/audio/query")
 def query_source_audio(name: str):
     infos = djv.find_source_audio(name)
-    result = json.dumps(infos, default=lambda obj: obj.__dict__, sort_keys=False, indent=4)
+    result = json.dumps(infos, default=lambda obj: obj.__dict__, sort_keys=False, indent=4, ensure_ascii=False)
     return {"success": True, "code": 0, "msg": "ok", "data": result}
