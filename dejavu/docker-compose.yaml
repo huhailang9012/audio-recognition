@@ -1,7 +1,7 @@
 version: '3'
 services:
   dejavu:
-    image: recognition:latest
+    image: huhailang/recognition:latest
     build:
       context: .
       network: host
