@@ -16,7 +16,6 @@ config = {
 confidence = 0.05
 djv = Dejavu(config)
 
-
 @app.get("/matched/information/index")
 def index(related_key: str):
 
