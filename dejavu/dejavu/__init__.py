@@ -221,8 +221,13 @@ class Dejavu:
                     FIELD_RELATED_AUDIOS_FILE_SHA1: ra.get(FIELD_RELATED_AUDIOS_FILE_SHA1, None)
                 }
                 related_audios.append(audio)
+            most_similar = ''
+            confidence = 0
+            if ras:
+                most_similar = ras[0].get(FIELD_RELATED_AUDIOS_RELATED_AUDIO_NAME, None)
+                confidence = ra.get(FIELD_RELATED_AUDIOS_FINGERPRINTED_CONFIDENCE,None)
             matched = Matched_Information(audio_id, audio_name, total_time, fingerprint_time, align_time, query_time,
-                                          related_audios, date_created)
+                                          related_audios, date_created, most_similar, confidence)
             matched_informations.append(matched)
         return matched_informations
 
