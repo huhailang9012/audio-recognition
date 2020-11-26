@@ -149,7 +149,12 @@
       <workItem from="1606290515019" duration="708000" />
       <workItem from="1606304329131" duration="54000" />
       <workItem from="1606307644718" duration="173000" />
-      <workItem from="1606376666343" duration="1551000" />
+      <workItem from="1606376666343" duration="1614000" />
+      <workItem from="1606388410152" duration="137000" />
+      <workItem from="1606390879982" duration="800000" />
+      <workItem from="1606392088300" duration="593000" />
+      <workItem from="1606397474313" duration="117000" />
+      <workItem from="1606401512292" duration="73000" />
     </task>
     <task id="LOCAL-00001" summary="1.新增查询版权音频列表接口&#10;2.匹配信息音频列表按置信度从高到低排序">
       <created>1606288998993</created>
@@ -172,7 +177,21 @@
       <option name="project" value="LOCAL" />
       <updated>1606304366850</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="1.数据库服务host --&gt; container_name">
+      <created>1606386976340</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1606386976341</updated>
+    </task>
+    <task id="LOCAL-00005" summary="1.匹配结果索引显示最相似歌曲信息">
+      <created>1606391663179</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1606391663179</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -182,13 +201,15 @@
     <MESSAGE value="1.新增查询版权音频列表接口&#10;2.匹配信息音频列表按置信度从高到低排序" />
     <MESSAGE value="1.修复查询列表中有中文字段显示异常问题" />
     <MESSAGE value="1.镜像名称修改为huhailang/recognition" />
-    <option name="LAST_COMMIT_MESSAGE" value="1.镜像名称修改为huhailang/recognition" />
+    <MESSAGE value="1.数据库服务host --&gt; container_name" />
+    <MESSAGE value="1.匹配结果索引显示最相似歌曲信息" />
+    <option name="LAST_COMMIT_MESSAGE" value="1.匹配结果索引显示最相似歌曲信息" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="277" y="0" key="CommitChangelistDialog2" timestamp="1606304364999">
+    <state x="374" y="17" key="CommitChangelistDialog2" timestamp="1606391661485">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="277" y="0" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1606304364999" />
+    <state x="374" y="17" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1606391661485" />
     <state x="548" y="153" key="FileChooserDialogImpl" timestamp="1605968381171">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -219,10 +240,10 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state width="498" height="446" key="SwitcherDM/0.0.1536.824@0.0.1536.824" timestamp="1606288388725" />
-    <state x="361" y="148" key="Vcs.Push.Dialog.v2" timestamp="1606304369189">
+    <state x="361" y="148" key="Vcs.Push.Dialog.v2" timestamp="1606391666011">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="361" y="148" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1606304369189" />
+    <state x="361" y="148" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1606391666011" />
     <state x="449" y="236" key="com.intellij.ide.util.TipDialog" timestamp="1606271224897">
       <screen x="0" y="0" width="1536" height="824" />
     </state>

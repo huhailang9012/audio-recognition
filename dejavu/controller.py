@@ -13,7 +13,7 @@ config = {
     },
     "database_type": "postgres"
 }
-confidence = 0.1
+confidence = 0.05
 djv = Dejavu(config)
 
 
