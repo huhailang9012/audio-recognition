@@ -2,17 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="095445b3-65f1-4d1b-8058-db620e47db64" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/controller.py" beforeDir="false" afterPath="$PROJECT_DIR$/controller.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dejavu/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/dejavu/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dejavu/base_classes/base_database.py" beforeDir="false" afterPath="$PROJECT_DIR$/dejavu/base_classes/base_database.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dejavu/base_classes/common_database.py" beforeDir="false" afterPath="$PROJECT_DIR$/dejavu/base_classes/common_database.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dejavu/config/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/dejavu/config/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dejavu/database_handler/postgres_database.py" beforeDir="false" afterPath="$PROJECT_DIR$/dejavu/database_handler/postgres_database.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dejavu/logic/recognizer/file_recognizer.py" beforeDir="false" afterPath="$PROJECT_DIR$/dejavu/logic/recognizer/file_recognizer.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docker-compose.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docker/python/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/docker/python/Dockerfile" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -31,6 +22,7 @@
   </component>
   <component name="JupyterTrust" id="a6a9a8dc-fa63-4a64-bd6a-6d99dbc36605" />
   <component name="ProjectId" id="1is1Dh1roRQipdi9iJlRqlBAimT" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -44,7 +36,12 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="E:\Project\Audio-Recognition\dejavu" />
+      <recent name="E:\Project\Audio-Recognition\dejavu\sql" />
       <recent name="E:\Project\ar\dejavu" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="E:\Project\Audio-Recognition\dejavu\docker\python" />
     </key>
   </component>
   <component name="RunManager" selected="Python.person (1)">
@@ -99,7 +96,7 @@
       </list>
     </recent_temporary>
   </component>
-  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="SpellCheckerSettings" BundledDictionaries="0" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" Dictionaries="0" CorrectionsLimit="5" DefaultDictionary="application-level" UseSingleDictionary="true" />
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -138,18 +135,65 @@
       <workItem from="1605616079118" duration="1000000" />
       <workItem from="1605666781158" duration="4289000" />
       <workItem from="1605677710710" duration="7187000" />
+      <workItem from="1605963725130" duration="2187000" />
+      <workItem from="1606034487877" duration="13040000" />
+      <workItem from="1606119069709" duration="224000" />
+      <workItem from="1606123819024" duration="1620000" />
+      <workItem from="1606126766785" duration="546000" />
+      <workItem from="1606129603218" duration="1650000" />
+      <workItem from="1606135114640" duration="3157000" />
+      <workItem from="1606191158645" duration="11560000" />
+      <workItem from="1606271210374" duration="68000" />
+      <workItem from="1606272512083" duration="10872000" />
+      <workItem from="1606289210321" duration="1200000" />
+      <workItem from="1606290515019" duration="708000" />
+      <workItem from="1606304329131" duration="54000" />
+      <workItem from="1606307644718" duration="173000" />
+      <workItem from="1606376666343" duration="1551000" />
     </task>
+    <task id="LOCAL-00001" summary="1.新增查询版权音频列表接口&#10;2.匹配信息音频列表按置信度从高到低排序">
+      <created>1606288998993</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1606288998993</updated>
+    </task>
+    <task id="LOCAL-00002" summary="1.修复查询列表中有中文字段显示异常问题">
+      <created>1606290392007</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1606290392007</updated>
+    </task>
+    <task id="LOCAL-00003" summary="1.镜像名称修改为huhailang/recognition">
+      <created>1606304366850</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1606304366850</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
-    <option name="version" value="3" />
+    <option name="version" value="1" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="1.新增查询版权音频列表接口&#10;2.匹配信息音频列表按置信度从高到低排序" />
+    <MESSAGE value="1.修复查询列表中有中文字段显示异常问题" />
+    <MESSAGE value="1.镜像名称修改为huhailang/recognition" />
+    <option name="LAST_COMMIT_MESSAGE" value="1.镜像名称修改为huhailang/recognition" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="548" y="153" key="FileChooserDialogImpl" timestamp="1605403127788">
+    <state x="277" y="0" key="CommitChangelistDialog2" timestamp="1606304364999">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="277" y="0" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1606304364999" />
+    <state x="548" y="153" key="FileChooserDialogImpl" timestamp="1605968381171">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="2605" y="193" key="FileChooserDialogImpl/0.0.1536.824/1920.0.1920.1040@1920.0.1920.1040" timestamp="1605077895479" />
-    <state x="548" y="153" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1605403127788" />
+    <state x="548" y="153" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1605968381171" />
     <state width="1877" height="282" key="GridCell.Tab.0.bottom" timestamp="1605013488708">
       <screen x="1920" y="0" width="1920" height="1040" />
     </state>
@@ -171,21 +215,34 @@
     </state>
     <state x="2381" y="162" key="SettingsEditor/0.0.1536.824/1920.0.1920.1040@1920.0.1920.1040" timestamp="1605344991864" />
     <state x="369" y="114" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1605684930969" />
-    <state x="449" y="236" key="com.intellij.ide.util.TipDialog" timestamp="1605402720519">
+    <state width="498" height="446" key="SwitcherDM" timestamp="1606288388725">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="498" height="446" key="SwitcherDM/0.0.1536.824@0.0.1536.824" timestamp="1606288388725" />
+    <state x="361" y="148" key="Vcs.Push.Dialog.v2" timestamp="1606304369189">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="361" y="148" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1606304369189" />
+    <state x="449" y="236" key="com.intellij.ide.util.TipDialog" timestamp="1606271224897">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="2481" y="298" key="com.intellij.ide.util.TipDialog/0.0.1536.824/1920.0.1920.1040@1920.0.1920.1040" timestamp="1605074153316" />
-    <state x="449" y="236" key="com.intellij.ide.util.TipDialog/0.0.1536.824@0.0.1536.824" timestamp="1605402720519" />
-    <state x="559" y="14" width="803" height="1011" key="find.popup" timestamp="1605687768620">
-      <screen x="0" y="0" width="1920" height="1040" />
+    <state x="449" y="236" key="com.intellij.ide.util.TipDialog/0.0.1536.824@0.0.1536.824" timestamp="1606271224897" />
+    <state x="447" y="11" width="642" height="801" key="find.popup" timestamp="1606288699660">
+      <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="2786" y="29" width="803" height="1011" key="find.popup/0.0.1536.824/1920.0.1920.1040@1920.0.1920.1040" timestamp="1605077018334" />
-    <state x="447" y="11" width="642" height="801" key="find.popup/0.0.1536.824@0.0.1536.824" timestamp="1605685203147" />
+    <state x="447" y="11" width="642" height="801" key="find.popup/0.0.1536.824@0.0.1536.824" timestamp="1606288699660" />
     <state x="559" y="14" width="803" height="1011" key="find.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1605687768620" />
-    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1605687621723">
-      <screen x="0" y="0" width="1920" height="1040" />
+    <state x="485" y="214" key="git4idea.merge.GitPullDialog" timestamp="1605966487102">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="485" y="214" key="git4idea.merge.GitPullDialog/0.0.1536.824@0.0.1536.824" timestamp="1605966487102" />
+    <state x="498" y="178" width="672" height="538" key="search.everywhere.popup" timestamp="1606284978950">
+      <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="2543" y="225" width="672" height="678" key="search.everywhere.popup/0.0.1536.824/1920.0.1920.1040@1920.0.1920.1040" timestamp="1605071083335" />
+    <state x="498" y="178" width="672" height="538" key="search.everywhere.popup/0.0.1536.824@0.0.1536.824" timestamp="1606284978950" />
     <state x="623" y="225" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1605687621723" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">

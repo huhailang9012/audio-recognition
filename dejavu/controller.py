@@ -6,7 +6,7 @@ import json
 app = FastAPI()
 config = {
     "database": {
-        "host": "ar.com",
+        "host": "postgres",
         "user": "postgres",
         "password": "123456",
         "database": "audio_recognition"
