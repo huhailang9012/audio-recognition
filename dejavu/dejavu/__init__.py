@@ -6,7 +6,6 @@ import uuid
 from itertools import groupby
 from time import time
 from typing import Dict, List, Tuple
-import json
 import dejavu.logic.decoder as decoder
 from dejavu.base_classes.base_database import get_database
 from dejavu.base_classes.matched_information import Matched_Information

@@ -6,9 +6,7 @@ from psycopg2.extras import DictCursor
 from dejavu.base_classes.common_database import CommonDatabase
 from dejavu.config.settings import (FIELD_FILE_SHA1, FIELD_FINGERPRINTED,
                                     FIELD_HASH, FIELD_OFFSET, FIELD_AUDIO_ID,
-                                    FIELD_AUDIO_NAME, FIELD_TOTAL_HASHES,
-                                    FIELD_MATCHED_AUDIO_ID,
-                                    FIELD_MATCHED_AUDIO_FILE_MD5, FIELD_MATCHED_AUDIO_RELATED_KEY,
+                                    FIELD_AUDIO_NAME, FIELD_TOTAL_HASHES, FIELD_MATCHED_AUDIO_RELATED_KEY,
                                     FIELD_MATCHED_INFORMATION_ID, FIELD_MATCHED_INFORMATION_AUDIO_ID, FIELD_MATCHED_INFORMATION_AUDIO_NAME,
                                     FIELD_MATCHED_INFORMATION_TOTAL_TIME, FIELD_MATCHED_INFORMATION_FINGERPRINT_TIME,
                                     FIELD_MATCHED_INFORMATION_QUERY_TIME, FIELD_MATCHED_INFORMATION_ALIGN_TIME,
@@ -23,7 +21,6 @@ from dejavu.config.settings import (FIELD_FILE_SHA1, FIELD_FINGERPRINTED,
                                     FIELD_RELATED_AUDIOS_OFFSET_SECONDS, FIELD_RELATED_AUDIOS_FILE_SHA1,
                                     MATCHED_AUDIOS_TABLE_NAME, MATCHED_INFORMATION_TABLE_NAME,
                                     RELATED_AUDIOS_TABLE_NAME, FINGERPRINTS_TABLE_NAME, AUDIOS_TABLE_NAME)
-
 
 class PostgreSQLDatabase(CommonDatabase):
     type = "postgres"
@@ -216,7 +213,7 @@ class PostgreSQLDatabase(CommonDatabase):
         ,   "{FIELD_RELATED_AUDIOS_OFFSET_SECONDS}"
         ,   upper(encode("{FIELD_RELATED_AUDIOS_FILE_SHA1}", 'hex')) AS "{FIELD_FILE_SHA1}"
         FROM "{RELATED_AUDIOS_TABLE_NAME}"
-        WHERE "{FIELD_RELATED_AUDIOS_AUDIO_ID}" = %s AND "{FIELD_RELATED_AUDIOS_FINGERPRINTED_CONFIDENCE}" >= %s
+        WHERE "{FIELD_RELATED_AUDIOS_AUDIO_ID}" = %s AND "{FIELD_RELATED_AUDIOS_FINGERPRINTED_CONFIDENCE}" > 0.05
         ORDER BY "{FIELD_RELATED_AUDIOS_FINGERPRINTED_CONFIDENCE}" DESC;
     """
 

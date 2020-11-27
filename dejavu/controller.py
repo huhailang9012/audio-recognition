@@ -1,7 +1,27 @@
+import logging
+
 from fastapi import FastAPI
 from dejavu import Dejavu
 from dejavu.logic.recognizer.file_recognizer import FileRecognizer
 import json
+
+
+# 定义日志属性，及输出
+logging.basicConfig(level=logging.DEBUG,
+                    format='%(asctime)s %(levelname)-8s %(message)s',
+                    datefmt='%m-%d %H:%M',
+                    filename='myapp.log',
+                    filemode='w')
+# define a Handler which writes INFO messages or higher to the sys.stderr
+console = logging.StreamHandler()
+console.setLevel(logging.INFO)
+# set a format which is simpler for console use
+formatter = logging.Formatter('%(asctime)s %(levelname)-8s %(message)s')
+# tell the handler to use this format
+console.setFormatter(formatter)
+# add the handler to the root logger
+logging.getLogger('').addHandler(console)
+logging.info("save date done")
 
 app = FastAPI()
 config = {
@@ -18,7 +38,7 @@ djv = Dejavu(config)
 
 @app.get("/matched/information/index")
 def index(related_key: str):
-
+    logging.info('/matched/information/index' + ',params = ' + related_key)
     infos = djv.find_matched_info(related_key, confidence)
     result = json.dumps(infos, default=lambda obj: obj.__dict__, sort_keys=False, indent=4)
     return {"success": True, "code": 0, "msg": "ok", "data": result}
