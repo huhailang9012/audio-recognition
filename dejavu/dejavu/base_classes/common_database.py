@@ -127,7 +127,7 @@ class CommonDatabase(BaseDatabase, metaclass=abc.ABCMeta):
         :return: a dictionary with the audios info.
         """
         with self.cursor(dictionary=True) as cur:
-            cur.execute(self.SELECT_RELATED_AUDIOS, (audio_id, confidence))
+            cur.execute(self.SELECT_RELATED_AUDIOS, (audio_id,))
             return list(cur)
 
     def get_audio_by_id(self, audio_id: int) -> Dict[str, str]:
