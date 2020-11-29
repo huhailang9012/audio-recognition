@@ -20,9 +20,9 @@ djv = Dejavu(config)
 fingerprinted_confidence = 0.05
 
 @app.get("/matched/information/index")
-def index(related_key: str, precise: bool):
+def index(related_key: str):
 
-    infos = djv.find_matched_info(related_key, fingerprinted_confidence,  precise)
+    infos = djv.find_matched_info(related_key, fingerprinted_confidence)
     result = json.dumps(infos, default=lambda obj: obj.__dict__, sort_keys=False, indent=4, ensure_ascii=False)
     return {"success": True, "code": 0, "msg": "ok", "data": result}
 

@@ -189,7 +189,7 @@ class Dejavu:
 
         return matches, dedup_hashes, query_time
 
-    def find_matched_info(self, related_key:str, fingerprinted_confidence: float, precise: bool) -> list:
+    def find_matched_info(self, related_key:str, fingerprinted_confidence: float) -> list:
         matched_infos = self.db.get_matched_info(related_key)
         matched_informations = list()
         for info in matched_infos:
@@ -202,6 +202,11 @@ class Dejavu:
             date_created = info.get(FIELD_MATCHED_INFORMATION_DATE_CREATED, None)
             audio_name = related_key + '-' + date_created
             related_audios = list()
+            audios = self.db.get_source_audio(related_key)
+            if audios:
+                precise = True
+            else:
+                precise = False
             if precise:
                 # precise query
                 ras = self.db.get_related_audios_byPrecise(audio_id, fingerprinted_confidence, related_key)
