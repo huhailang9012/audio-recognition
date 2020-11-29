@@ -143,7 +143,6 @@ class CommonDatabase(BaseDatabase, metaclass=abc.ABCMeta):
         """
         param = {"audio_id": audio_id, "fingerprinted_confidence": confidence, "related_audio_name": audio_name}
         with self.cursor(dictionary=True) as cur:
-            print(cur.mogrify(self.SELECT_RELATED_AUDIOS_BYPRECISE % (audio_id, confidence, audio_name)))
             cur.execute(self.SELECT_RELATED_AUDIOS_BYPRECISE % (audio_id, confidence, audio_name))
             return list(cur)
 
