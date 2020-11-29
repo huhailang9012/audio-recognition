@@ -36,7 +36,6 @@ class FileRecognizer(BaseRecognizer):
         t = time() - t
         # insert a matched information into database
         self.dejavu.db.insert_matched_information(match_id, audio_id, name, file_md5, t, fingerprint_time, query_time, align_time, now, related_key)
-
         for match in matches:
             relate_audio_id = match[AUDIO_ID]
             relate_audio_name = match[AUDIO_NAME]

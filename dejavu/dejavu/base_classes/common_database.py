@@ -126,9 +126,27 @@ class CommonDatabase(BaseDatabase, metaclass=abc.ABCMeta):
 
         :return: a dictionary with the audios info.
         """
+        param = {"audio_id": audio_id, "fingerprinted_confidence": confidence}
         with self.cursor(dictionary=True) as cur:
-            cur.execute(self.SELECT_RELATED_AUDIOS, (audio_id,))
+            cur.execute(self.SELECT_RELATED_AUDIOS, param)
             return list(cur)
+        # with self.cursor(dictionary=True) as cur:
+        #     print(cur.mogrify(self.SELECT_RELATED_AUDIOS, param))
+        #     cur.execute(self.SELECT_RELATED_AUDIOS, param)
+        #     return list(cur)
+
+    def get_related_audios_byPrecise(self, audio_id: str, confidence: float, audio_name: str) -> List[Dict[str, str]]:
+        """
+        Returns precise related audios
+
+        :return: a dictionary with the audios info.
+        """
+        param = {"audio_id": audio_id, "fingerprinted_confidence": confidence, "related_audio_name": audio_name}
+        with self.cursor(dictionary=True) as cur:
+            print(cur.mogrify(self.SELECT_RELATED_AUDIOS_BYPRECISE % (audio_id, confidence, audio_name)))
+            cur.execute(self.SELECT_RELATED_AUDIOS_BYPRECISE % (audio_id, confidence, audio_name))
+            return list(cur)
+
 
     def get_audio_by_id(self, audio_id: int) -> Dict[str, str]:
         """

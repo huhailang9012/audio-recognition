@@ -2,7 +2,7 @@
 class Matched_Information(object):
 
     def __init__(self, audio_id: str, audio_name: str, total_time: float, fingerprint_time: float, query_time: float,
-                 align_time: float, related_audios: list, date_created: str, most_similar: str, confidence: float):
+                 align_time: float, related_audios: list, date_created: str, max_similarity: str, confidence: float):
         self.audio_id = audio_id
         self.audio_name = audio_name
         self.total_time = total_time
@@ -11,5 +11,5 @@ class Matched_Information(object):
         self.query_time = query_time
         self.related_audios = related_audios
         self.date_created = date_created
-        self.most_similar = most_similar
+        self.max_similarity = max_similarity
         self.confidence = confidence

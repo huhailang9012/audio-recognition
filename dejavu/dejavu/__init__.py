@@ -189,7 +189,7 @@ class Dejavu:
 
         return matches, dedup_hashes, query_time
 
-    def find_matched_info(self, related_key:str, confidence: float) -> list:
+    def find_matched_info(self, related_key:str, fingerprinted_confidence: float, precise: bool) -> list:
         matched_infos = self.db.get_matched_info(related_key)
         matched_informations = list()
         for info in matched_infos:
@@ -201,7 +201,11 @@ class Dejavu:
             query_time = info.get(FIELD_MATCHED_INFORMATION_QUERY_TIME, None)
             date_created = info.get(FIELD_MATCHED_INFORMATION_DATE_CREATED, None)
             related_audios = list()
-            ras = self.db.get_related_audios(audio_id, confidence)
+            if precise:
+                # precise query
+                ras = self.db.get_related_audios_byPrecise(audio_id, fingerprinted_confidence, related_key)
+            else:
+                ras = self.db.get_related_audios(audio_id, fingerprinted_confidence)
             for ra in ras:
                 audio = {
                     FIELD_RELATED_AUDIOS_RELATED_AUDIO_ID: ra.get(FIELD_RELATED_AUDIOS_RELATED_AUDIO_ID, None),
@@ -220,13 +224,13 @@ class Dejavu:
                     FIELD_RELATED_AUDIOS_FILE_SHA1: ra.get(FIELD_RELATED_AUDIOS_FILE_SHA1, None)
                 }
                 related_audios.append(audio)
-            most_similar = ''
+            max_similarity = ''
             confidence = 0
             if ras:
-                most_similar = ras[0].get(FIELD_RELATED_AUDIOS_RELATED_AUDIO_NAME, None)
+                max_similarity = ras[0].get(FIELD_RELATED_AUDIOS_RELATED_AUDIO_NAME, None)
                 confidence = ra.get(FIELD_RELATED_AUDIOS_FINGERPRINTED_CONFIDENCE,None)
             matched = Matched_Information(audio_id, audio_name, total_time, fingerprint_time, align_time, query_time,
-                                          related_audios, date_created, most_similar, confidence)
+                                          related_audios, date_created, max_similarity, confidence)
             matched_informations.append(matched)
         return matched_informations
 

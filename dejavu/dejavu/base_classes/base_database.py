@@ -121,6 +121,15 @@ class BaseDatabase(object, metaclass=abc.ABCMeta):
         pass
 
     @abc.abstractmethod
+    def get_related_audios_byPrecise(self, audio_id: str, confidence: float, audio_name: str) -> List[Dict[str, str]]:
+        """
+        Returns precise related audio
+
+        :return: a dictionary with the audios info.
+        """
+        pass
+
+    @abc.abstractmethod
     def get_audio_by_id(self, audio_id: int) -> Dict[str, str]:
         """
         Brings the audio info from the database.
