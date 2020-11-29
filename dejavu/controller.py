@@ -24,7 +24,6 @@ def index(related_key: str, precise: bool):
 
     infos = djv.find_matched_info(related_key, fingerprinted_confidence,  precise)
     result = json.dumps(infos, default=lambda obj: obj.__dict__, sort_keys=False, indent=4, ensure_ascii=False)
-    print(result)
     return {"success": True, "code": 0, "msg": "ok", "data": result}
 
 

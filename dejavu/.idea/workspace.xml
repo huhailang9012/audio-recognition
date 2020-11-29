@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="095445b3-65f1-4d1b-8058-db620e47db64" name="Default Changelist" comment="">
+    <list default="true" id="095445b3-65f1-4d1b-8058-db620e47db64" name="Default Changelist" comment="1.指纹置信度匹配降至5%">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/controller.py" beforeDir="false" afterPath="$PROJECT_DIR$/controller.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dejavu/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/dejavu/__init__.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -154,7 +155,9 @@
       <workItem from="1606390879982" duration="800000" />
       <workItem from="1606392088300" duration="593000" />
       <workItem from="1606397474313" duration="117000" />
-      <workItem from="1606401512292" duration="73000" />
+      <workItem from="1606401512292" duration="120000" />
+      <workItem from="1606434495115" duration="4378000" />
+      <workItem from="1606615907376" duration="20239000" />
     </task>
     <task id="LOCAL-00001" summary="1.新增查询版权音频列表接口&#10;2.匹配信息音频列表按置信度从高到低排序">
       <created>1606288998993</created>
@@ -191,7 +194,35 @@
       <option name="project" value="LOCAL" />
       <updated>1606391663179</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="1.指纹置信度匹配降至5%">
+      <created>1606401610135</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1606401610135</updated>
+    </task>
+    <task id="LOCAL-00007" summary="1.添加日志组件">
+      <created>1606437344890</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1606437344890</updated>
+    </task>
+    <task id="LOCAL-00008" summary="1.指纹置信度匹配降至5%">
+      <created>1606438376741</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1606438376741</updated>
+    </task>
+    <task id="LOCAL-00009" summary="1.指纹置信度条件改为动态&#10;2.匹配结果索引分为精确匹配查询和非模糊匹配查询">
+      <created>1606640674183</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1606640674183</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -203,13 +234,21 @@
     <MESSAGE value="1.镜像名称修改为huhailang/recognition" />
     <MESSAGE value="1.数据库服务host --&gt; container_name" />
     <MESSAGE value="1.匹配结果索引显示最相似歌曲信息" />
-    <option name="LAST_COMMIT_MESSAGE" value="1.匹配结果索引显示最相似歌曲信息" />
+    <MESSAGE value="1.添加日志组件" />
+    <MESSAGE value="1.指纹置信度匹配降至5%" />
+    <MESSAGE value="1.指纹置信度条件改为动态&#10;2.匹配结果索引分为精确匹配查询和非模糊匹配查询" />
+    <option name="LAST_COMMIT_MESSAGE" value="1.指纹置信度条件改为动态&#10;2.匹配结果索引分为精确匹配查询和非模糊匹配查询" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="374" y="17" key="CommitChangelistDialog2" timestamp="1606391661485">
+    <state x="471" y="221" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1606617871353">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="374" y="17" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1606391661485" />
+    <state x="471" y="221" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1536.824@0.0.1536.824" timestamp="1606617871353" />
+    <state x="374" y="17" key="CommitChangelistDialog2" timestamp="1606640672330">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="374" y="17" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1606640672330" />
+    <state x="468" y="21" key="CommitChangelistDialog2/0.0.1920.1040@0.0.1920.1040" timestamp="1606438374993" />
     <state x="548" y="153" key="FileChooserDialogImpl" timestamp="1605968381171">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -240,21 +279,27 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state width="498" height="446" key="SwitcherDM/0.0.1536.824@0.0.1536.824" timestamp="1606288388725" />
-    <state x="361" y="148" key="Vcs.Push.Dialog.v2" timestamp="1606391666011">
+    <state x="361" y="148" key="Vcs.Push.Dialog.v2" timestamp="1606640676614">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="361" y="148" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1606391666011" />
-    <state x="449" y="236" key="com.intellij.ide.util.TipDialog" timestamp="1606271224897">
-      <screen x="0" y="0" width="1536" height="824" />
+    <state x="361" y="148" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1606640676614" />
+    <state x="451" y="187" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1606438378291" />
+    <state x="561" y="298" key="com.intellij.ide.util.TipDialog" timestamp="1606434511844">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="2481" y="298" key="com.intellij.ide.util.TipDialog/0.0.1536.824/1920.0.1920.1040@1920.0.1920.1040" timestamp="1605074153316" />
     <state x="449" y="236" key="com.intellij.ide.util.TipDialog/0.0.1536.824@0.0.1536.824" timestamp="1606271224897" />
-    <state x="447" y="11" width="642" height="801" key="find.popup" timestamp="1606288699660">
+    <state x="561" y="298" key="com.intellij.ide.util.TipDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1606434511844" />
+    <state x="347" y="18" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1606629923898">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="347" y="18" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/0.0.1536.824@0.0.1536.824" timestamp="1606629923898" />
+    <state x="447" y="11" width="642" height="801" key="find.popup" timestamp="1606632070570">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="2786" y="29" width="803" height="1011" key="find.popup/0.0.1536.824/1920.0.1920.1040@1920.0.1920.1040" timestamp="1605077018334" />
-    <state x="447" y="11" width="642" height="801" key="find.popup/0.0.1536.824@0.0.1536.824" timestamp="1606288699660" />
-    <state x="559" y="14" width="803" height="1011" key="find.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1605687768620" />
+    <state x="447" y="11" width="642" height="801" key="find.popup/0.0.1536.824@0.0.1536.824" timestamp="1606632070570" />
+    <state x="559" y="14" width="803" height="1011" key="find.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1606434532633" />
     <state x="485" y="214" key="git4idea.merge.GitPullDialog" timestamp="1605966487102">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
