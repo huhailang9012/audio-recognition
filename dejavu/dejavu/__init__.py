@@ -200,7 +200,7 @@ class Dejavu:
             align_time = info.get(FIELD_MATCHED_INFORMATION_ALIGN_TIME, None)
             query_time = info.get(FIELD_MATCHED_INFORMATION_QUERY_TIME, None)
             date_created = info.get(FIELD_MATCHED_INFORMATION_DATE_CREATED, None)
-            audio_name = audio_name + '-' + date_created
+            audio_name = related_key + '-' + date_created
             related_audios = list()
             if precise:
                 # precise query
